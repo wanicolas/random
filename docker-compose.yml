@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  ghost:
+    image: ghost:alpine
+    restart: always
+    ports:
+      - 2368:2368
+    environment:
+      # URL locale pour que les liens marchent
+      url: http://localhost:2368
+      # Important: Mode dev pour éviter le cache agressif des templates
+      NODE_ENV: development
+      # Configuration DB (SQLite par défaut, suffisant pour le dev)
+      database__client: sqlite3
+      database__connection__filename: /var/lib/ghost/content/data/ghost.db
+    volumes:
+      # 1. On stocke les données (images, db) dans un volume Docker (caché)
+      # pour ne pas polluer ton dossier projet.
+      - ghost-data:/var/lib/ghost/content
+      
+      # 2. LA CLEF DU SUCCÈS : On injecte ton dossier theme local
+      # directement dans le dossier themes de Ghost
+      - ./theme:/var/lib/ghost/content/themes/mon-magazine
+      
+      # Note: Sur Linux, ajoute parfois 'user: "1000:1000"' si tu as des soucis de droits
+
+volumes:
+  ghost-data:

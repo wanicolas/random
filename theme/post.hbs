@@ -1,0 +1,49 @@
+{{!-- Template pour afficher un article individuel --}}
+
+{{#post}}
+<article class="post">
+    <header class="post-header">
+        {{#if feature_image}}
+        <div class="post-feature-image">
+            <img src="{{feature_image}}" alt="{{title}}">
+        </div>
+        {{/if}}
+        
+        <h1 class="post-title">{{title}}</h1>
+        
+        <div class="post-meta">
+            <time datetime="{{date format="YYYY-MM-DD"}}">
+                {{date format="DD MMMM YYYY"}}
+            </time>
+            {{#if primary_author}}
+            <span class="post-author">par {{primary_author.name}}</span>
+            {{/if}}
+            {{#if tags}}
+            <div class="post-tags">
+                {{tags separator=", "}}
+            </div>
+            {{/if}}
+        </div>
+    </header>
+
+    <div class="post-content">
+        {{content}}
+    </div>
+
+    <footer class="post-footer">
+        {{#if primary_author}}
+        <div class="author-card">
+            {{#if primary_author.profile_image}}
+            <img src="{{primary_author.profile_image}}" alt="{{primary_author.name}}" class="author-avatar">
+            {{/if}}
+            <div class="author-info">
+                <h4>{{primary_author.name}}</h4>
+                {{#if primary_author.bio}}
+                <p>{{primary_author.bio}}</p>
+                {{/if}}
+            </div>
+        </div>
+        {{/if}}
+    </footer>
+</article>
+{{/post}}

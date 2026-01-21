@@ -1,0 +1,37 @@
+{{!-- Template pour la page d'accueil (liste des articles) --}}
+
+<div class="posts-list">
+    {{#foreach posts}}
+    <article class="post-card">
+        {{#if feature_image}}
+        <div class="post-card-image">
+            <img src="{{feature_image}}" alt="{{title}}">
+        </div>
+        {{/if}}
+        
+        <div class="post-card-content">
+            <h2 class="post-card-title">
+                <a href="{{url}}">{{title}}</a>
+            </h2>
+            
+            <div class="post-card-meta">
+                <time datetime="{{date format="YYYY-MM-DD"}}">
+                    {{date format="DD MMMM YYYY"}}
+                </time>
+                {{#if primary_author}}
+                <span class="post-card-author">par {{primary_author.name}}</span>
+                {{/if}}
+            </div>
+            
+            {{#if excerpt}}
+            <p class="post-card-excerpt">{{excerpt}}</p>
+            {{/if}}
+            
+            <a href="{{url}}" class="read-more">Lire la suite →</a>
+        </div>
+    </article>
+    {{/foreach}}
+</div>
+
+{{!-- Pagination --}}
+{{pagination}}

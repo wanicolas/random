@@ -1,0 +1,11 @@
+# Ignorer les fichiers système
+.DS_Store
+Thumbs.db
+
+# Ignorer les modules node du thème (ils seront installés par le CI/CD si besoin)
+theme/node_modules/
+theme/yarn-error.log
+
+# Très important : Si jamais tu mappes la DB en local par erreur, on l'ignore
+*.db
+*.sqlite3
