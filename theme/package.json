@@ -34,8 +34,8 @@
     }
   },
   "scripts": {
-    "dev": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/built.css --watch",
-    "build": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/css/built.css --minify"
+    "dev": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/built/screen.css --watch",
+    "build": "npx @tailwindcss/cli -i ./assets/css/input.css -o ./assets/built/screen.css --minify"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.18",
