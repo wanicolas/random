@@ -1,49 +1,36 @@
-{{!-- Template pour afficher un article individuel --}}
+{{!< default}}
 
 {{#post}}
-<article class="post">
-    <header class="post-header">
-        {{#if feature_image}}
-        <div class="post-feature-image">
-            <img src="{{feature_image}}" alt="{{title}}">
-        </div>
-        {{/if}}
-        
-        <h1 class="post-title">{{title}}</h1>
-        
-        <div class="post-meta">
-            <time datetime="{{date format="YYYY-MM-DD"}}">
-                {{date format="DD MMMM YYYY"}}
-            </time>
-            {{#if primary_author}}
-            <span class="post-author">par {{primary_author.name}}</span>
-            {{/if}}
-            {{#if tags}}
-            <div class="post-tags">
-                {{tags separator=", "}}
-            </div>
-            {{/if}}
-        </div>
-    </header>
-
-    <div class="post-content">
-        {{content}}
+<article class="min-h-screen bg-white">
+    {{! Bouton retour }}
+    <div class="px-6 pt-6">
+        <a href="{{@site.url}}" class="inline-flex items-center gap-2 bg-[var(--color-primary)] text-white text-sm font-semibold px-6 py-2 rounded-full hover:opacity-90 transition">
+            ← Retour
+        </a>
     </div>
 
-    <footer class="post-footer">
-        {{#if primary_author}}
-        <div class="author-card">
-            {{#if primary_author.profile_image}}
-            <img src="{{primary_author.profile_image}}" alt="{{primary_author.name}}" class="author-avatar">
-            {{/if}}
-            <div class="author-info">
-                <h4>{{primary_author.name}}</h4>
-                {{#if primary_author.bio}}
-                <p>{{primary_author.bio}}</p>
-                {{/if}}
-            </div>
+    {{! Image featured }}
+    {{#if feature_image}}
+    <div class="px-6 pt-6">
+        <div class="rounded-2xl overflow-hidden shadow-lg">
+            <img src="{{feature_image}}" alt="{{title}}" class="w-full h-[300px] object-cover">
         </div>
-        {{/if}}
-    </footer>
+    </div>
+    {{/if}}
+    
+    {{! Titre de l'article }}
+    <header class="px-6 pt-8 pb-6">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">{{title}}</h1>
+    </header>
+
+    {{! Contenu de l'article }}
+    <div class="px-6 pb-8">
+        <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+            {{content}}
+        </div>
+    </div>
+
+    {{! Section Dernières actualités }}
+    {{> "latest-articles" excludeId=id}}
 </article>
 {{/post}}
