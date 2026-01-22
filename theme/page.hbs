@@ -1,19 +1,21 @@
-{{!-- Template pour les pages statiques (à propos, contact, etc.) --}}
+{{! Template pour les pages statiques (à propos, contact, etc.) }}
 
 {{#post}}
-<article class="page">
-    <header class="page-header">
-        {{#if feature_image}}
-        <div class="page-feature-image">
-            <img src="{{feature_image}}" alt="{{title}}">
-        </div>
-        {{/if}}
-        
-        <h1 class="page-title">{{title}}</h1>
-    </header>
+	<article class="page">
+		<header class="page-header">
+			{{#if feature_image}}
+				<div class="page-feature-image">
+					<img src="{{feature_image}}" alt="{{title}}" />
+				</div>
+			{{/if}}
 
-    <div class="page-content">
-        {{content}}
-    </div>
-</article>
+			<h1 class="page-title">
+				{{title}}
+			</h1>
+		</header>
+
+		<div class="page-content">
+			{{content}}
+		</div>
+	</article>
 {{/post}}

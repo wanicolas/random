@@ -1,58 +1,65 @@
 <html lang="{{@site.locale}}">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{meta_title}}</title>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>
+			{{meta_title}}
+		</title>
 
-    {{! Preload scripts }}
-    <link rel="preload" as="style" href="{{asset 'built/screen.css'}}" />
+		{{! Preload scripts }}
+		<link rel="preload" as="style" href="{{asset 'built/screen.css'}}" />
 
-    {{! Theme assets - use the {asset} helper to reference styles & scripts, this will take care of caching and cache-busting automatically }}
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{asset 'built/screen.css'}}"
-    />
+		{{! Theme assets - use the {asset} helper to reference styles & scripts, this will take care of caching and cache-busting automatically }}
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{{asset 'built/screen.css'}}"
+		/>
 
-    {{! This tag outputs all your advanced SEO meta, structured data, and other important settings,
+		{{! This tag outputs all your advanced SEO meta, structured data, and other important settings,
     it should always be the last tag before the closing head tag }}
-    {{ghost_head}}
-  </head>
-  <body class="{{body_class}}">
+		{{ghost_head}}
+	</head>
+	<body class="{{body_class}}">
+		<header class="site-header">
+			<div class="container">
+				<h1 class="site-title">
+					<a href="{{@site.url}}">
+						{{@site.title}}
+					</a>
+				</h1>
+				<p class="site-description">
+					{{@site.description}}
+				</p>
 
-    <header class="site-header">
-      <div class="container">
-        <h1 class="site-title">
-          <a href="{{@site.url}}">{{@site.title}}</a>
-        </h1>
-        <p class="site-description">{{@site.description}}</p>
+				<nav class="site-nav">
+					{{navigation}}
+				</nav>
+			</div>
+		</header>
 
-        <nav class="site-nav">
-          {{navigation}}
-        </nav>
-      </div>
-    </header>
+		<main class="site-main">
+			<div class="container">
+				{{! Tout le contenu de la page sera injecté ici }}
+				{{{body}}}
+			</div>
+		</main>
 
-    <main class="site-main">
-      <div class="container">
-        {{! Tout le contenu de la page sera injecté ici }}
-        {{{body}}}
-      </div>
-    </main>
+		<footer class="site-footer">
+			<div class="container">
+				<p>
+					&copy;
+					{{date format="YYYY"}}
+					{{@site.title}}
+					- Tous droits réservés
+				</p>
+			</div>
+		</footer>
 
-    <footer class="site-footer">
-      <div class="container">
-        <p>&copy;
-          {{date format="YYYY"}}
-          {{@site.title}}
-          - Tous droits réservés</p>
-      </div>
-    </footer>
+		{{! Scripts JS }}
+		<script src="{{asset 'js/main.js'}}"></script>
 
-    {{! Scripts JS }}
-    <script src="{{asset 'js/main.js'}}"></script>
-
-    {{! Ghost injecte les scripts nécessaires }}
-    {{ghost_foot}}
-  </body>
+		{{! Ghost injecte les scripts nécessaires }}
+		{{ghost_foot}}
+	</body>
 </html>
