@@ -44,54 +44,15 @@
         </div>
         {{/if}}
         
-        {{! Header avec titre et méta }}
-        <header class="px-4 sm:px-6 lg:px-8 pt-8 pb-4">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6 tracking-tight">
+        {{! Header avec titre }}
+        <header class="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight tracking-tight">
                 {{title}}
             </h1>
-            
-            {{! Meta informations }}
-            <div class="flex flex-wrap items-center gap-4 text-sm">
-                {{#if primary_author}}
-                <div class="flex items-center gap-2">
-                    {{#if primary_author.profile_image}}
-                    <img src="{{primary_author.profile_image}}" 
-                         alt="{{primary_author.name}}" 
-                         class="w-10 h-10 rounded-full object-cover border-2 border-[var(--color-primary)]">
-                    {{else}}
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-white font-bold text-lg">
-                        A
-                    </div>
-                    {{/if}}
-                    <div class="flex flex-col">
-                        <span class="text-xs text-gray-500 uppercase tracking-wide">Auteur</span>
-                        <span class="font-semibold text-gray-900">{{primary_author.name}}</span>
-                    </div>
-                </div>
-                {{/if}}
-                
-                <div class="flex items-center gap-2 text-[var(--color-secondary)]">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    <time datetime="{{date format="YYYY-MM-DD"}}" class="font-semibold">
-                        {{date format="DD.MM.YYYY"}}
-                    </time>
-                </div>
-                
-                {{#if reading_time}}
-                <div class="flex items-center gap-2 text-gray-500">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <span>{{reading_time}}</span>
-                </div>
-                {{/if}}
-            </div>
         </header>
 
         {{! Contenu de l'article avec typographie améliorée }}
-        <div class="px-4 sm:px-6 lg:px-8 pb-12">
+        <div class="px-4 sm:px-6 lg:px-8 pb-8">
             <div class="prose prose-lg max-w-none
                         prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight
                         prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
@@ -105,6 +66,23 @@
                         prose-blockquote:border-l-4 prose-blockquote:border-[var(--color-primary)] prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-600
                         prose-code:text-[var(--color-secondary)] prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded">
                 {{content}}
+            </div>
+            
+            {{! Badges date et auteur en bas }}
+            <div class="flex flex-wrap items-center gap-3 mt-8">
+                <div class="inline-flex items-center gap-2 bg-[var(--color-secondary)] text-white text-sm font-semibold px-4 py-2 rounded-full">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <time datetime="{{date format="YYYY-MM-DD"}}">
+                        {{date format="DD.MM.YYYY"}}
+                    </time>
+                </div>
+                
+                {{#if primary_author}}
+                <div class="inline-flex items-center gap-2 bg-[var(--color-secondary)] text-white text-sm font-semibold px-4 py-2 rounded-full">
+                    <i data-lucide="user" class="w-4 h-4"></i>
+                    <span>{{primary_author.name}}</span>
+                </div>
+                {{/if}}
             </div>
         </div>
     </div>
