@@ -1,0 +1,41 @@
+{{! Composant réutilisable : Liste des dernières actualités }}
+{{! Paramètres :
+    - limit : nombre d'articles à afficher (défaut: 3)
+    - excludeId : ID de l'article à exclure (optionnel)
+}}
+
+<section class="px-6 pb-12">
+    <h2 class="text-2xl font-bold mb-6">Dernières actualités</h2>
+    
+    <div class="space-y-4">
+        {{#get "posts" limit="3"}}
+            {{#foreach posts}}
+            <article class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+                <a href="{{url}}" class="flex items-center gap-4 p-4">
+                    {{! Image miniature }}
+                    {{#if feature_image}}
+                    <div class="flex-shrink-0 size-24 rounded-lg overflow-hidden bg-gray-100">
+                        <img src="{{feature_image}}" alt="{{title}}" class="w-full h-full object-cover">
+                    </div>
+                    {{else}}
+                    <div class="flex-shrink-0 w-24 h-24 rounded-lg bg-gradient-to-br from-gray-200 to-gray-300"></div>
+                    {{/if}}
+                    
+                    {{! Contenu de la carte }}
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-base font-semibold text-gray-900 line-clamp-2 mb-2">{{title}}</h3>
+                        <span class="inline-flex items-center bg-primary text-white text-xs font-semibold px-4 py-1 rounded-full">
+                            En savoir plus
+                        </span>
+                    </div>
+                    
+                    {{! Date }}
+                    <div class="flex-shrink-0 text-sm text-gray-500">
+                        {{date format="DD/MM/YY"}}
+                    </div>
+                </a>
+            </article>
+            {{/foreach}}
+        {{/get}}
+    </div>
+</section>

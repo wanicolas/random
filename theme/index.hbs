@@ -5,41 +5,41 @@ into the {body} tag of the default.hbs template }}
 
 {{! Template pour la page d'accueil (liste des articles) }}
 
-<div class="posts-list">
-	{{#foreach posts}}
-		<article class="post-card">
-			{{#if feature_image}}
-				<div class="post-card-image">
-					<img src="{{feature_image}}" alt="{{title}}" />
-				</div>
-			{{/if}}
+<div class="posts-list space-y-6">
+  {{#foreach posts}}
+    <article class="post-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+      <a href="{{url}}" class="block">
+        {{#if feature_image}}
+          <div class="post-card-image h-48 overflow-hidden">
+            <img src="{{feature_image}}" alt="{{title}}" class="w-full h-full object-cover" />
+          </div>
+        {{/if}}
 
-			<div class="post-card-content">
-				<h2 class="post-card-title">
-					<a href="{{url}}">
-						{{title}}
-					</a>
-				</h2>
+        <div class="post-card-content p-6">
+          <h2 class="post-card-title text-2xl font-bold text-gray-900 mb-3">
+            {{title}}
+          </h2>
 
-				<div class="post-card-meta">
-					<time datetime="{{date format="YYYY-MM-DD"}}">
-						{{date format="DD MMMM YYYY"}}
-					</time>
-					{{#if primary_author}}
-						<span class="post-card-author">par {{primary_author.name}}</span>
-					{{/if}}
-				</div>
+          <div class="post-card-meta text-sm text-gray-500 mb-3 flex items-center gap-4">
+            <time datetime="{{date format="YYYY-MM-DD"}}">
+              {{date format="DD MMMM YYYY"}}
+            </time>
+            {{#if primary_author}}
+              <span class="post-card-author">par {{primary_author.name}}</span>
+            {{/if}}
+          </div>
 
-				{{#if excerpt}}
-					<p class="post-card-excerpt">{{excerpt}}</p>
-				{{/if}}
+          {{#if excerpt}}
+            <p class="post-card-excerpt text-gray-600 mb-4">{{excerpt}}</p>
+          {{/if}}
 
-				<a href="{{url}}" class="read-more">
-					Lire la suite →
-				</a>
-			</div>
-		</article>
-	{{/foreach}}
+          <span class="inline-flex items-center bg-[var(--color-primary)] text-white text-sm font-semibold px-6 py-2 rounded-full hover:opacity-90 transition">
+            Lire la suite →
+          </span>
+        </div>
+      </a>
+    </article>
+  {{/foreach}}
 </div>
 
 {{! Pagination }}
