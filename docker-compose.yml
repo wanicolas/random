@@ -15,15 +15,11 @@ services:
       database__client: sqlite3
       database__connection__filename: /var/lib/ghost/content/data/ghost.db
     volumes:
-      # 1. On stocke les données (images, db) dans un volume Docker (caché)
-      # pour ne pas polluer ton dossier projet.
+      # 1. On stocke les données (images, db) dans un volume Docker (caché) pour ne pas polluer le dossier projet.
       - ghost-data:/var/lib/ghost/content
       
-      # 2. LA CLEF DU SUCCÈS : On injecte ton dossier theme local
-      # directement dans le dossier themes de Ghost
-      - ./theme:/var/lib/ghost/content/themes/mon-magazine
+      # 2. On injecte le dossier theme local directement dans le dossier themes de Ghost
+      - ./theme:/var/lib/ghost/content/themes/random-theme
       
-      # Note: Sur Linux, ajoute parfois 'user: "1000:1000"' si tu as des soucis de droits
-
 volumes:
   ghost-data:
