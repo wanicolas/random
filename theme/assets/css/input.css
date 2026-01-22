@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+/* Variables Tailwind */
+@theme {
+  /* Couleurs */
+  --color-primary: #d50169; /* Rose */
+  --color-secondary: #f18825; /* Orange */
+  --color-black: #020a0a;
+  --color-white: #f0f0f0;
+
+  /* Fonts */
+  --font-primary: "Playfair Display", serif;
+  --font-secondary: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+}
+
+/* Styles globaux */
+body {
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-secondary);
+}
