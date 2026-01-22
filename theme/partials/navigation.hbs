@@ -1,0 +1,7 @@
+<menu class="divide-y-2  border-white space-y-3 font-bold text-center">
+  <!-- Loop through the navigation items -->
+  {{#foreach navigation}}
+    <a href="{{url absolute="true"}}" class="nav-{{slug}}{{#if current}} nav-current{{/if}} block pb-3">{{label}}</a>
+  {{/foreach}}
+  <!-- End the loop -->
+</menu>
