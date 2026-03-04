@@ -1,0 +1,69 @@
+{{!< default}} {{! Force le fond noir sur toute la page }} <style>
+    body,
+    .site-main,
+    .site-main .container {
+    background-color: #020a0a !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    }
+    </style>
+
+    {{#post}} <article class="min-h-screen bg-black text-white">
+        <div class="max-w-xl mx-auto px-6 py-8 pb-32">
+
+            {{! ---- TITRE ---- }}
+            <header class="text-center mb-6">
+                <h1 class="text-3xl font-extrabold text-primary mb-3 font-primary">
+                    {{title}}
+                </h1>
+                <div class="h-0.5 w-16 bg-primary mx-auto"></div>
+            </header>
+
+            {{! ---- IMAGE DE L'EQUIPE ---- }}
+            <div class="relative rounded-[1.5rem] overflow-hidden mb-8 shadow-lg">
+                {{#if feature_image}}
+                <img src="{{feature_image}}" alt="{{title}}" class="w-full h-56 object-cover" />
+                {{else}}
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop"
+                    alt="L'EKIP" class="w-full h-56 object-cover" />
+                {{/if}}
+
+                {{! Badge "L'EKIP" en haut à droite }}
+                <div
+                    class="absolute top-4 right-4 bg-white text-secondary text-[10px] font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 uppercase tracking-wider shadow-sm">
+                    <i data-lucide="user" class="size-3"></i> L'EKIP
+                </div>
+
+                {{! Légende en bas à droite }}
+                <div class="absolute bottom-3 right-4 text-white text-[10px] font-medium drop-shadow-md">
+                    *les 2 autres en visios
+                </div>
+            </div>
+
+            {{! ---- SEPARATEUR ---- }}
+            <div class="flex justify-center mb-8">
+                <div class="h-0.5 w-32 bg-primary"></div>
+            </div>
+
+            {{! ---- TEXTE DE LA PAGE (depuis Ghost admin) ---- }}
+            <div class="text-[13px] leading-relaxed mb-10 text-gray-200 font-sans space-y-4">
+                {{content}}
+            </div>
+
+            {{! ---- CITATION ---- }}
+            <div class="bg-primary text-white p-6 rounded-[1.5rem] mb-8 shadow-md">
+                <p class="text-[12px] leading-relaxed mb-4 font-sans font-medium">
+                    "Nullam viverra magna non dolor congue congue. Sed scelerisque orci imperdiet nunc suscipit viverra.
+                    Curabitur feugiat at elit non laoreet. Fermentum enim vel nisi elementum venenatis. Duis ut tempus
+                    leo.
+                    Fusco posuere ac sapien vitae dictum."
+                </p>
+                <div class="text-right text-[11px] italic font-sans opacity-90">
+                    Julie ROTH, Chef de projet
+                </div>
+            </div>
+
+        </div>
+    </article>
+    {{/post}}
