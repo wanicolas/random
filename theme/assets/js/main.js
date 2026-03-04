@@ -9,6 +9,7 @@ import {
 	House,
 	BookOpen,
 	Newspaper,
+	Tag,
 } from "lucide";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			Newspaper,
 			User,
 			BookOpen,
+			Tag,
 		},
 	});
 });
