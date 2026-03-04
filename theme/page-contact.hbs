@@ -11,24 +11,32 @@
     /* Styles spécifiques du formulaire */
     .contact-input {
     width: 100%;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.75rem 1.25rem;
     font-size: 0.8125rem;
     outline: none;
-    transition: border-color 0.2s;
-    background-color: #f9fafb;
+    transition: box-shadow 0.2s;
+    background-color: #f3f4f6;
     color: #111827;
     }
+    textarea.contact-input {
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    }
+    .contact-input::placeholder {
+    color: rgba(213, 1, 105, 0.4);
+    font-weight: 500;
+    }
     .contact-input:focus {
-    border-color: #d50169;
-    box-shadow: 0 0 0 2px rgba(213, 1, 105, 0.15);
+    box-shadow: 0 0 0 2px rgba(213, 1, 105, 0.3);
     }
     .contact-label {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     font-weight: 600;
     color: #d50169;
     margin-bottom: 0.25rem;
+    margin-left: 0.5rem;
     display: block;
     }
     </style>
@@ -72,17 +80,17 @@
             </div>
 
             {{! ---- FORMULAIRE DE CONTACT ---- }}
-            <form class="space-y-4" onsubmit="return false;">
+            <form class="space-y-5" onsubmit="return false;">
 
                 {{! Prénom + Nom sur la même ligne }}
-                <div class="flex gap-3">
+                <div class="flex gap-4">
                     <div class="flex-1">
                         <label class="contact-label" for="prenom">Prénom</label>
-                        <input id="prenom" type="text" placeholder="..." class="contact-input" />
+                        <input id="prenom" type="text" placeholder="Prénom" class="contact-input" />
                     </div>
                     <div class="flex-1">
                         <label class="contact-label" for="nom">Nom</label>
-                        <input id="nom" type="text" placeholder="..." class="contact-input" />
+                        <input id="nom" type="text" placeholder="Nom" class="contact-input" />
                     </div>
                 </div>
 
@@ -90,16 +98,17 @@
                 <div>
                     <label class="contact-label" for="email">Email</label>
                     <div class="relative">
-                        <input id="email" type="email" placeholder="..." class="contact-input pl-8" />
+                        <input id="email" type="email" class="contact-input pl-11" />
                         <i data-lucide="mail"
-                            class="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-primary pointer-events-none"></i>
+                            class="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-primary pointer-events-none"></i>
                     </div>
                 </div>
 
                 {{! Message }}
                 <div>
                     <label class="contact-label" for="message">Message</label>
-                    <textarea id="message" rows="6" placeholder="..." class="contact-input resize-none"></textarea>
+                    <textarea id="message" rows="6" placeholder="Écrivez votre message..."
+                        class="contact-input resize-none"></textarea>
                 </div>
 
                 {{! Bouton Envoyer }}
