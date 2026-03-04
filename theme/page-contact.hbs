@@ -1,0 +1,127 @@
+{{!< default}} {{! Force le fond blanc sur toute la page }} <style>
+    body,
+    .site-main,
+    .site-main .container {
+    background-color: #ffffff !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    }
+
+    /* Styles spécifiques du formulaire */
+    .contact-input {
+    width: 100%;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8125rem;
+    outline: none;
+    transition: box-shadow 0.2s;
+    background-color: #f3f4f6;
+    color: #111827;
+    }
+    textarea.contact-input {
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    }
+    .contact-input::placeholder {
+    color: rgba(213, 1, 105, 0.4);
+    font-weight: 500;
+    }
+    .contact-input:focus {
+    box-shadow: 0 0 0 2px rgba(213, 1, 105, 0.3);
+    }
+    .contact-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #d50169;
+    margin-bottom: 0.25rem;
+    margin-left: 0.5rem;
+    display: block;
+    }
+    </style>
+
+    {{#post}}
+    <article class="min-h-screen bg-white text-black">
+        <div class="max-w-xl mx-auto px-6 py-8 pb-32">
+
+            {{! ---- TITRE ---- }}
+            <header class="text-center mb-6">
+                <h1 class="text-3xl font-extrabold text-primary mb-3 font-primary">
+                    {{title}}
+                </h1>
+                <div class="h-0.5 w-16 bg-primary mx-auto"></div>
+            </header>
+
+            {{! ---- IMAGE DE L'EQUIPE ---- }}
+            <div class="relative rounded-[1.5rem] overflow-hidden mb-6 shadow-lg">
+                {{#if feature_image}}
+                <img src="{{feature_image}}" alt="{{title}}" class="w-full h-64 object-cover" />
+                {{else}}
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop"
+                    alt="L'EKIP" class="w-full h-64 object-cover" />
+                {{/if}}
+
+                {{! Badge "L'EKIP" en haut à droite }}
+                <div
+                    class="absolute top-4 right-4 bg-white text-secondary text-[10px] font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 uppercase tracking-wider shadow-sm">
+                    <i data-lucide="users" class="size-3"></i> L'EKIP
+                </div>
+
+                {{! Légende en bas à droite }}
+                <div class="absolute bottom-3 right-4 text-white text-[10px] font-medium drop-shadow-md">
+                    *les 2 autres en visios
+                </div>
+            </div>
+
+            {{! ---- SEPARATEUR ---- }}
+            <div class="flex justify-center mb-6">
+                <div class="h-0.5 w-32 bg-primary"></div>
+            </div>
+
+            {{! ---- FORMULAIRE DE CONTACT ---- }}
+            <form class="space-y-5" onsubmit="return false;">
+
+                {{! Prénom + Nom sur la même ligne }}
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <label class="contact-label" for="prenom">Prénom</label>
+                        <input id="prenom" type="text" placeholder="Prénom" class="contact-input" />
+                    </div>
+                    <div class="flex-1">
+                        <label class="contact-label" for="nom">Nom</label>
+                        <input id="nom" type="text" placeholder="Nom" class="contact-input" />
+                    </div>
+                </div>
+
+                {{! Email }}
+                <div>
+                    <label class="contact-label" for="email">Email</label>
+                    <div class="relative">
+                        <input id="email" type="email" class="contact-input pl-11" />
+                        <i data-lucide="mail"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-primary pointer-events-none"></i>
+                    </div>
+                </div>
+
+                {{! Message }}
+                <div>
+                    <label class="contact-label" for="message">Message</label>
+                    <textarea id="message" rows="6" placeholder="Écrivez votre message..."
+                        class="contact-input resize-none"></textarea>
+                </div>
+
+                {{! Bouton Envoyer }}
+                <div class="flex justify-center pt-2">
+                    <button type="submit"
+                        class="bg-primary text-white font-bold text-sm px-8 py-2.5 rounded-full flex items-center gap-2 hover:opacity-90 transition-opacity">
+                        Envoyer
+                        <i data-lucide="chevrons-right" class="size-4"></i>
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </article>
+    {{/post}}
