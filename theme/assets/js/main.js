@@ -1,5 +1,16 @@
 // Fichier JavaScript principal pour ton thème
 
+// Import all Lucide icons you need to reduce bundle size by tree-shaking the library.
+import {
+	createIcons,
+	Calendar,
+	User,
+	Menu,
+	House,
+	BookOpen,
+	Newspaper,
+} from "lucide";
+
 document.addEventListener("DOMContentLoaded", function () {
 	console.log("Thème Ghost chargé !");
 
@@ -17,4 +28,15 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	// Tu peux ajouter tes scripts personnalisés ici
+
+	createIcons({
+		icons: {
+			Calendar,
+			Menu,
+			House,
+			Newspaper,
+			User,
+			BookOpen,
+		},
+	});
 });

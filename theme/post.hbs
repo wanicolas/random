@@ -71,7 +71,7 @@
             {{! Badges date et auteur en bas }}
             <div class="flex flex-wrap items-center gap-3 mt-8">
                 <div class="inline-flex items-center gap-2 bg-[var(--color-secondary)] text-white text-sm font-semibold px-4 py-2 rounded-full">
-                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <i data-lucide="calendar" class="size-4"></i>
                     <time datetime="{{date format="YYYY-MM-DD"}}">
                         {{date format="DD.MM.YYYY"}}
                     </time>
@@ -79,7 +79,7 @@
                 
                 {{#if primary_author}}
                 <div class="inline-flex items-center gap-2 bg-[var(--color-secondary)] text-white text-sm font-semibold px-4 py-2 rounded-full">
-                    <i data-lucide="user" class="w-4 h-4"></i>
+                    <i data-lucide="user" class="size-4"></i>
                     <span>{{primary_author.name}}</span>
                 </div>
                 {{/if}}
