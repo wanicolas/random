@@ -11,6 +11,7 @@ import {
 	Newspaper,
 	Tag,
 	MousePointerClick,
+	ArrowRight,
 } from "lucide";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			BookOpen,
 			Tag,
 			MousePointerClick,
+			ArrowRight,
 		},
 	});
 });

@@ -1,0 +1,304 @@
+{{!< default}}
+
+{{! Page Actualités avec grille d'articles }}
+
+<div class="min-h-screen pb-24">
+    {{! Header avec titre centre et ligne decorative }}
+    <header class="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+        <div class="flex flex-col items-center text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-bold text-primary">Actualites</h1>
+            <div class="w-52 h-1 bg-primary mt-4 rounded-full"></div>
+        </div>
+
+        {{! Barre de recherche et filtres a droite }}
+        <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3 md:gap-4 max-w-5xl mx-auto">
+            <div class="relative flex-1">
+                <input
+                    type="search"
+                    placeholder="Rechercher par titre ou theme..."
+                    class="w-full px-4 py-3 pr-12 rounded-full border-2 border-primary-40 focus:border-color-primary focus:outline-none text-gray-700 placeholder-gray-400 bg-white"
+                    id="searchInput"
+                />
+                <i data-lucide="search" class="absolute right-4 top-1/2 -translate-y-1/2 size-5 text-primary"></i>
+            </div>
+
+            <div class="md:ml-auto flex items-center gap-2">
+                <i data-lucide="filter" class="size-5 text-primary"></i>
+                <select
+                    id="themeFilter"
+                    class="min-w-44 px-4 py-3 rounded-full border-2 border-primary bg-white text-gray-700 font-semibold focus:border-primary focus:outline-none"
+                >
+                    <option value="">Tous les themes</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    {{! Grille d'articles - 3 colonnes }}
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12" id="articlesGrid">
+            {{#foreach posts}}
+            <article class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1" data-theme="{{#if primary_tag}}{{primary_tag.name}}{{/if}}">
+                <a href="{{url}}" class="block">
+                    {{! Image de l'article }}
+                    {{#if feature_image}}
+                    <div class="relative h-48 sm:h-56 overflow-hidden bg-gray-100">
+                        <img
+                            src="{{feature_image}}"
+                            alt="{{title}}"
+                            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                    </div>
+                    {{else}}
+                    <div class="h-48 sm:h-56 bg-gradient-to-br from-color-primary to-color-secondary"></div>
+                    {{/if}}
+
+                    {{! Contenu de la carte }}
+                    <div class="p-5 sm:p-6">
+                        {{! Tags (si disponibles) }}
+                        {{#if primary_tag}}
+                        <span class="article-theme inline-block bg-primary text-white  text-xs font-bold px-3 py-1 rounded-full mb-3">
+                            {{primary_tag.name}}
+                        </span>
+                        {{/if}}
+
+                        {{! Titre }}
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">
+                            {{title}}
+                        </h2>
+
+                        {{! Excerpt }}
+                        {{#if excerpt}}
+                        <p class="text-gray-600 mb-4 line-clamp-2 text-sm sm:text-base">
+                            {{excerpt}}
+                        </p>
+                        {{/if}}
+
+                        {{! Footer avec date et bouton }}
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <time
+                                datetime="{{date format='YYYY-MM-DD'}}"
+                                class="text-sm text-gray-500 flex items-center gap-2"
+                            >
+                                <i data-lucide="calendar" class="size-4"></i>
+                                {{date format="DD MMM YYYY"}}
+                            </time>
+
+                            <span class="inline-flex items-center gap-2 bg-primary text-white text-sm font-semibold px-5 py-2 rounded-full hover:opacity-90 transition-opacity">
+                                En savoir plus
+                                <i data-lucide="arrow-right" class="size-4"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            {{/foreach}}
+        </div>
+
+        {{! Pagination }}
+        <div class="flex justify-center pb-8" id="articlesPagination">
+            {{pagination}}
+        </div>
+
+        <p id="noResults" class="hidden text-center text-gray-500 font-semibold pb-8">
+            Aucun article ne correspond a votre recherche.
+        </p>
+    </div>
+</div>
+
+<script>
+    // Utilise l'API Ghost Content API pour la recherche
+    const searchInput = document.getElementById('searchInput');
+    const themeFilter = document.getElementById('themeFilter');
+    const noResults = document.getElementById('noResults');
+    const grid = document.getElementById('articlesGrid');
+    const pagination = document.getElementById('articlesPagination');
+    const initialGridHtml = grid?.innerHTML || '';
+
+    let allPosts = [];
+    let hasLoadedAllPosts = false;
+
+    // Crée une carte d'article en JavaScript (même structure que Handlebars)
+    function createPostCard(post) {
+        const article = document.createElement('article');
+        article.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1';
+        article.dataset.theme = post.primary_tag?.name || '';
+
+        const link = document.createElement('a');
+        link.href = post.url;
+        link.className = 'block';
+
+        // Image
+        const imageDiv = document.createElement('div');
+        if (post.feature_image) {
+            imageDiv.className = 'relative h-48 sm:h-56 overflow-hidden bg-gray-100';
+            imageDiv.innerHTML = `
+                <img src="${post.feature_image}" alt="${post.title}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+            `;
+        } else {
+            imageDiv.className = 'h-48 sm:h-56 bg-gradient-to-br from-color-primary to-color-secondary';
+        }
+
+        // Contenu
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'p-5 sm:p-6';
+
+        // Tag
+        if (post.primary_tag) {
+            const tagHtml = `<span class="article-theme inline-block bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-3">${post.primary_tag.name}</span>`;
+            contentDiv.innerHTML += tagHtml;
+        }
+
+        // Titre
+        const titleHtml = `<h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">${post.title}</h2>`;
+        contentDiv.innerHTML += titleHtml;
+
+        // Excerpt
+        if (post.excerpt) {
+            const excerptHtml = `<p class="text-gray-600 mb-4 line-clamp-2 text-sm sm:text-base">${post.excerpt}</p>`;
+            contentDiv.innerHTML += excerptHtml;
+        }
+
+        // Footer avec date et bouton
+        const publishedDate = new Date(post.published_at).toLocaleDateString('fr-FR', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+        const footerHtml = `
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                <time datetime="${post.published_at.split('T')[0]}" class="text-sm text-gray-500 flex items-center gap-2">
+                    <i data-lucide="calendar" class="size-4"></i>
+                    ${publishedDate}
+                </time>
+                <span class="inline-flex items-center gap-2 bg-primary text-white text-sm font-semibold px-5 py-2 rounded-full hover:opacity-90 transition-opacity">
+                    En savoir plus
+                    <i data-lucide="arrow-right" class="size-4"></i>
+                </span>
+            </div>
+        `;
+        contentDiv.innerHTML += footerHtml;
+
+        link.append(imageDiv, contentDiv);
+        article.appendChild(link);
+
+        return article;
+    }
+
+    async function fetchAllPosts() {
+        if (hasLoadedAllPosts) return allPosts;
+
+        try {
+            // Récupère l'URL et la clé API depuis Ghost
+            const apiUrl = '{{@site.url}}/ghost/api/content';
+            const apiKey = '{{@site.key}}';
+
+            if (!apiKey || apiKey === '') {
+                console.error('Clé API Ghost introuvable');
+                return [];
+            }
+
+            let page = 1;
+            const posts = [];
+
+            // Pagination automatique
+            while (page) {
+                const response = await fetch(`${apiUrl}/posts/?key=${apiKey}&limit=100&page=${page}&include=tags`);
+
+                if (!response.ok) {
+                    console.error(`API Ghost error: ${response.status}`);
+                    break;
+                }
+
+                const data = await response.json();
+                posts.push(...data.posts);
+                page = data.meta?.pagination?.next || null;
+            }
+
+            allPosts = posts;
+            hasLoadedAllPosts = true;
+            return allPosts;
+        } catch (error) {
+            console.error('Erreur lors du chargement des posts:', error);
+            return [];
+        }
+    }
+
+    function populateThemeFilter(posts) {
+        if (!themeFilter) return;
+
+        const themes = [...new Set(
+            posts
+                .map(post => post.primary_tag?.name)
+                .filter(Boolean)
+        )].sort((a, b) => a.localeCompare(b, 'fr'));
+
+        themeFilter.innerHTML = '<option value="">Tous les themes</option>';
+        themes.forEach(theme => {
+            const option = document.createElement('option');
+            option.value = theme.toLowerCase();
+            option.textContent = theme;
+            themeFilter.appendChild(option);
+        });
+    }
+
+    function restoreInitialState() {
+        if (grid) grid.innerHTML = initialGridHtml;
+        pagination?.classList.remove('hidden');
+        noResults?.classList.add('hidden');
+
+        // Réinitialise les icônes Lucide
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    }
+
+    async function applyFilters() {
+        const searchTerm = searchInput?.value.trim().toLowerCase() || '';
+        const selectedTheme = themeFilter?.value.toLowerCase() || '';
+
+        // Restaure l'état initial si aucun filtre actif
+        if (!searchTerm && !selectedTheme) {
+            restoreInitialState();
+            return;
+        }
+
+        try {
+            const posts = await fetchAllPosts();
+            populateThemeFilter(posts);
+
+            // Filtre les posts
+            const filteredPosts = posts.filter(post => {
+                const title = post.title.toLowerCase();
+                const theme = (post.primary_tag?.name || '').toLowerCase();
+                const matchesSearch = !searchTerm || title.includes(searchTerm) || theme.includes(searchTerm);
+                const matchesTheme = !selectedTheme || theme === selectedTheme;
+                return matchesSearch && matchesTheme;
+            });
+
+            // Mise à jour du DOM
+            if (grid) {
+                grid.innerHTML = '';
+                filteredPosts.forEach(post => grid.appendChild(createPostCard(post)));
+
+                // Réinitialise les icônes Lucide
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            }
+
+            pagination?.classList.add('hidden');
+            noResults?.classList.toggle('hidden', filteredPosts.length > 0);
+        } catch (error) {
+            console.error('Erreur lors du filtrage:', error);
+            restoreInitialState();
+        }
+    }
+
+    // Initialisation
+    fetchAllPosts().then(populateThemeFilter).catch(console.error);
+    searchInput?.addEventListener('input', applyFilters);
+    themeFilter?.addEventListener('change', applyFilters);
+</script>
