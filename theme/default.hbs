@@ -31,7 +31,26 @@
           <a href="/news/" aria-label="Actualités" class="hover:scale-110 transition-transform">
             <i data-lucide="newspaper" class="size-8"></i>
           </a>
-          <a href="{{@site.url}}" aria-label="Accueil" class="w-max"><img src="./assets/img/logo-random-quadri.png" class="max-h-8 max-w-8 object-contain"></a>
+          <a href="#" id="nav-random-post-btn" aria-label="Voir un article aléatoire" class="w-max hover:scale-110 transition-transform"><img src="./assets/img/logo-random-quadri.png" class="max-h-8 max-w-8 object-contain"></a>
+          {{#get "posts" limit="all"}}
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const navPostUrls = [
+                {{#foreach posts}}
+                "{{url}}",
+                {{/foreach}}
+              ];
+              const navBtn = document.getElementById('nav-random-post-btn');
+              if (navBtn && navPostUrls.length > 0) {
+                navBtn.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  const randomUrl = navPostUrls[Math.floor(Math.random() * navPostUrls.length)];
+                  window.location.href = randomUrl;
+                });
+              }
+            });
+          </script>
+          {{/get}}
           <a href="{{@site.url}}" aria-label="Article" class="hover:scale-110 transition-transform">
             <i data-lucide="book-open" class="size-8"></i>
           </a>
