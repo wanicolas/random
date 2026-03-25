@@ -5,42 +5,78 @@ into the {body} tag of the default.hbs template }}
 
 {{! Template pour la page d'accueil (liste des articles) }}
 
-<div class="posts-list space-y-6">
-  {{#foreach posts}}
-    <article class="post-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-      <a href="{{url}}" class="block">
-        {{#if feature_image}}
-          <div class="post-card-image h-48 overflow-hidden">
-            <img src="{{feature_image}}" alt="{{title}}" class="w-full h-full object-cover" />
-          </div>
-        {{/if}}
+  <div class="h-100 bg-gray-200 -mx-6 lg:-mx-20 -mt-6 lg:-mt-20"></div>
 
-        <div class="post-card-content p-6">
-          <h2 class="post-card-title text-2xl font-bold text-gray-900 mb-3">
-            {{title}}
-          </h2>
+  <div class="bg-white rounded-xl -mt-6 -mx-6 lg:-mx-20">
+    <div class="p-6">
+      <svg xmlns="http://www.w3.org/2000/svg" width="81" height="235" viewBox="0 0 81 235" fill="none" class="absolute left-0">
+        <path d="M75.6436 83.5483C67.3271 93.7742 45.2835 80.73 36.1262 91.3628C25.9667 103.165 45.6699 127.806 35.2338 139.279C27.0265 148.285 10.2307 138.153 2.55649 147.221C-5.10735 156.285 8.25284 170.449 5.20631 188.353C0.545756 215.768 -40.4421 239.23 -55.4829 230.014C-68.5734 221.995 -51.0321 195.998 -57.1126 134.125C-60.6928 97.7067 -68.8958 85.054 -59.373 72.458C-43.8714 51.93 -6.67673 65.1548 2.74024 46.231C10.4971 30.6562 -10.1117 12.4704 -3.33839 5.03473C4.71542 -3.79337 43.8056 11.0015 64.471 40.5419C72.5659 52.1058 83.4497 73.9633 75.6507 83.5517L75.6436 83.5483Z" stroke="#F1892A" stroke-width="5" stroke-miterlimit="10"/>
+      </svg>
+      <button class="relative w-fit mx-auto block ">
+        <img src="./assets/img/accueil.svg" alt=""  />
+        <i data-lucide="mouse-pointer-click" class="size-12.5 stroke-1 text-secondary absolute -right-2 -bottom-4"></i>
+      </button>
+      <div class="my-6 text-center">Accédez directement à un article de façon aléatoire.</div>
+      <div class="border-b w-full md:border-b-4 md:border-gray-300 mb-6 lg:mb-12"></div>
+    </div>
+  
+    <div class="flex flex-col lg:flex-row lg:px-20 lg:gap-40">
+      <div class="p-6">
+        <h2 class="font-bold text-2xl mb-6 text-center md:text-left uppercase">Découvrez <br> nos derniers articles.</h2>
+        <div class="posts-list space-y-6">
+          {{#foreach posts}}
+            <article
+              class="post-card overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition hover:shadow-md"
+            >
+              <a href="{{url}}" class="block">
+                {{#if feature_image}}
+                  <div class="post-card-image h-48 overflow-hidden">
+                    <img
+                      src="{{feature_image}}"
+                      alt="{{title}}"
+                      class="h-full w-full object-cover"
+                    />
+                  </div>
+                {{/if}}
+                <div class="post-card-content p-6">
+                  <h2 class="post-card-title mb-3 text-2xl font-bold text-gray-900">
+                    {{title}}
+                  </h2>
+                  <div
+                    class="post-card-meta mb-3 flex items-center gap-4 text-sm text-gray-500"
+                  >
+                    <time datetime="{{date format="YYYY-MM-DD"}}">
+                      {{date format="DD MMMM YYYY"}}
+                    </time>
+                    {{#if primary_author}}
+                      <span class="post-card-author">par {{primary_author.name}}</span>
+                    {{/if}}
+                  </div>
+                  {{#if excerpt}}
+                    <p class="post-card-excerpt mb-4 text-gray-600">{{excerpt}}</p>
+                  {{/if}}
+                  <span
+                    class="rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+                  >
+                    En savoir plus
+                  </span>
+                </div>
+              </a>
+            </article>
+          {{/foreach}}
 
-          <div class="post-card-meta text-sm text-gray-500 mb-3 flex items-center gap-4">
-            <time datetime="{{date format="YYYY-MM-DD"}}">
-              {{date format="DD MMMM YYYY"}}
-            </time>
-            {{#if primary_author}}
-              <span class="post-card-author">par {{primary_author.name}}</span>
-            {{/if}}
-          </div>
-
-          {{#if excerpt}}
-            <p class="post-card-excerpt text-gray-600 mb-4">{{excerpt}}</p>
-          {{/if}}
-
-          <span class="inline-flex items-center bg-[var(--color-primary)] text-white text-sm font-semibold px-6 py-2 rounded-full hover:opacity-90 transition">
-            Lire la suite →
-          </span>
+          {{! Pagination }}
+          {{pagination}}
         </div>
-      </a>
-    </article>
-  {{/foreach}}
+      </div>
+      
+      <div class="lg:order-first sticky top-6 lg:w-120 shrink-0 lg:h-180 lg:pb-20 rounded-t-xl lg:rounded-xl -mb-6 bg-gray-200 p-6 flex flex-col justify-between h-120 items-end">
+        <button class="w-full rounded-full py-4 px-6 text-2xl uppercase font-bold text-white backdrop-blur-3xl">
+          Découvrez notre <br> magazine de poche
+        </button>
+        <button class="py-1 px-3 rounded-full text-xl uppercase font-bold text-white bg-primary w-fit">S'abonner</button>
+      </div>
+    </div>
+  </div>
+  
 </div>
-
-{{! Pagination }}
-{{pagination}}
