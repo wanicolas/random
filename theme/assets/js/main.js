@@ -9,6 +9,8 @@ import {
 	House,
 	BookOpen,
 	Newspaper,
+	Tag,
+	MousePointerClick,
 } from "lucide";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -37,6 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			Newspaper,
 			User,
 			BookOpen,
+			Tag,
+			MousePointerClick,
 		},
 	});
 });

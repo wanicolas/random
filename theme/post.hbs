@@ -1,97 +1,73 @@
-{{!< default}}
+{{!< default}} {{#post}}
+<article>
+	{{! Container principal }}
+	<section class="mx-auto mb-10 max-w-4xl px-4 md:px-6">
+		{{! Image featured avec overlay et tags }}
+		{{#if feature_image}}
+		<div class="relative overflow-hidden rounded-3xl">
+			<img
+				src="{{feature_image}}"
+				alt="{{title}}"
+				class="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-80 md:h-96"
+			/>
 
-{{#post}}
-<article class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-    {{! Container principal }}
-    <div class="max-w-4xl mx-auto">
-        
-        {{! Bouton retour }}
-        <div class="px-4 sm:px-6 lg:px-8 pt-6">
-            <a href="{{@site.url}}" 
-               class="inline-flex items-center gap-2 bg-[var(--color-primary)] text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full hover:scale-105 hover:shadow-lg transition-all duration-200 shadow-md">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                </svg>
-                Retour
-            </a>
-        </div>
+			{{! Tags sur l'image }}
+			{{#if tags}}
+			<div
+				class="text-secondary absolute top-0 right-0 flex items-center gap-2 rounded-bl-2xl bg-white px-3 py-2 text-xs font-semibold"
+			>
+				<i data-lucide="tag" class="size-3.5"></i>
+				{{#foreach tags}}
+				<span>
+					{{ name }}
+				</span>
+				{{/foreach}}
+			</div>
+			{{/if}}
+		</div>
+		{{/if}}
 
-        {{! Image featured avec overlay et tags }}
-        {{#if feature_image}}
-        <div class="px-4 sm:px-6 lg:px-8 pt-6">
-            <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
-                <img src="{{feature_image}}" 
-                     alt="{{title}}" 
-                     class="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-500 group-hover:scale-105">
-                
-                {{! Overlay gradient }}
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                
-                {{! Tags sur l'image }}
-                {{#if tags}}
-                <div class="absolute top-4 right-4 flex flex-wrap gap-2">
-                    {{#foreach tags}}
-                    <span class="bg-[var(--color-primary)] text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
-                        {{name}}
-                    </span>
-                    {{/foreach}}
-                </div>
-                {{/if}}
-            </div>
-            
-            {{! Ligne décorative rose }}
-            <div class="w-48 h-1 bg-[var(--color-primary)] mt-6 rounded-full"></div>
-        </div>
-        {{/if}}
-        
-        {{! Header avec titre }}
-        <header class="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight tracking-tight">
-                {{title}}
-            </h1>
-        </header>
+		{{! Ligne décorative rose }}
+		<div class="bg-primary mx-auto my-10 h-0.75 w-52 rounded-full"></div>
 
-        {{! Contenu de l'article avec typographie améliorée }}
-        <div class="px-4 sm:px-6 lg:px-8 pb-8">
-            <div class="prose prose-lg max-w-none
-                        prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight
-                        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
-                        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
-                        prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-base prose-p:mb-6
-                        prose-a:text-[var(--color-primary)] prose-a:font-semibold prose-a:no-underline hover:prose-a:underline
-                        prose-strong:text-[var(--color-primary)] prose-strong:font-bold
-                        prose-ul:my-6 prose-ul:space-y-2
-                        prose-li:text-gray-700
-                        prose-img:rounded-2xl prose-img:shadow-lg prose-img:my-8
-                        prose-blockquote:border-l-4 prose-blockquote:border-[var(--color-primary)] prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-600
-                        prose-code:text-[var(--color-secondary)] prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded">
-                {{content}}
-            </div>
-            
-            {{! Badges date et auteur en bas }}
-            <div class="flex flex-wrap items-center gap-3 mt-8">
-                <div class="inline-flex items-center gap-2 bg-[var(--color-secondary)] text-white text-sm font-semibold px-4 py-2 rounded-full">
-                    <i data-lucide="calendar" class="size-4"></i>
-                    <time datetime="{{date format="YYYY-MM-DD"}}">
-                        {{date format="DD.MM.YYYY"}}
-                    </time>
-                </div>
-                
-                {{#if primary_author}}
-                <div class="inline-flex items-center gap-2 bg-[var(--color-secondary)] text-white text-sm font-semibold px-4 py-2 rounded-full">
-                    <i data-lucide="user" class="size-4"></i>
-                    <span>{{primary_author.name}}</span>
-                </div>
-                {{/if}}
-            </div>
-        </div>
-    </div>
+		{{! Header avec titre }}
+		<h1 class="mb-10 text-3xl font-bold text-gray-900 md:text-4xl">
+			{{ title }}
+		</h1>
 
-    {{! Section Dernières actualités avec fond }}
-    <div class="bg-gray-50 mt-12 pt-8">
-        <div class="max-w-4xl mx-auto">
-            {{> "latest-articles" excludeId=id}}
-        </div>
-    </div>
+		{{! Contenu de l'article avec typographie améliorée }}
+		<div
+			class="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-base prose-p:mb-6 prose-a:text-primary prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-primary prose-strong:font-bold prose-ul:my-6 prose-ul:space-y-2 prose-li:text-gray-700 prose-img:rounded-2xl prose-img:shadow-lg prose-img:my-8 prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-600 prose-code:text-secondary prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded max-w-none"
+		>
+			{{content}}
+		</div>
+
+		{{! Badges date et auteur en bas }}
+		<div class="mt-8 flex flex-wrap items-center justify-between gap-3">
+			<div
+				class="bg-secondary flex items-center gap-2 rounded-full px-4 py-1 text-sm font-medium text-white"
+			>
+				<i data-lucide="calendar" class="size-4"></i>
+				<time datetime="{{date format='YYYY-MM-DD'}}">
+					{{date format="DD.MM.YYYY"}}
+				</time>
+			</div>
+
+			{{#if primary_author}}
+			<div
+				class="bg-secondary flex items-center gap-2 rounded-full px-4 py-1 text-sm font-medium text-white"
+			>
+				<i data-lucide="user" class="size-4"></i>
+				<span>{{primary_author.name}}</span>
+			</div>
+			{{/if}}
+		</div>
+	</section>
+
+	{{! Section Dernières actualités avec fond }}
+
+	<section class="rounded-t-3xl bg-gray-100">
+		{{> "latest-articles" excludeId=id}}
+	</section>
 </article>
 {{/post}}
