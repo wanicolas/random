@@ -1,0 +1,312 @@
+{{!< default}}
+
+{{! Page Actualités avec grille d'articles }}
+
+<div class="min-h-screen pb-24">
+    {{! Header avec titre centre et ligne decorative }}
+    <header class="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+        <div class="flex flex-col items-center text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-bold text-primary">Actualites</h1>
+            <div class="w-52 h-1 bg-primary mt-4 rounded-full"></div>
+        </div>
+
+        {{! Barre de recherche et filtres a droite }}
+        <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3 md:gap-4 max-w-5xl mx-auto">
+            <div class="relative flex-1">
+                <input
+                    type="search"
+                    placeholder="Rechercher par titre ou theme..."
+                    class="w-full px-4 py-3 pr-12 rounded-full border-2 border-primary-40 focus:border-color-primary focus:outline-none text-gray-700 placeholder-gray-400 bg-white"
+                    id="searchInput"
+                />
+                <i data-lucide="search" class="absolute right-4 top-1/2 -translate-y-1/2 size-5 text-primary"></i>
+            </div>
+
+            <div class="md:ml-auto flex items-center gap-2">
+                <i data-lucide="filter" class="size-5 text-primary"></i>
+                <select
+                    id="themeFilter"
+                    class="min-w-44 px-4 py-3 rounded-full border-2 border-primary bg-white text-gray-700 font-semibold focus:border-primary focus:outline-none"
+                >
+                    <option value="">Tous les themes</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    {{! Grille d'articles }}
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12" id="articlesGrid">
+            {{#foreach posts}}
+            <article class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1" data-theme="{{#if primary_tag}}{{primary_tag.name}}{{/if}}">
+                <a href="{{url}}" class="block">
+                    {{! Image de l'article }}
+                    {{#if feature_image}}
+                    <div class="relative h-48 sm:h-56 overflow-hidden bg-gray-100">
+                        <img
+                            src="{{feature_image}}"
+                            alt="{{title}}"
+                            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                    </div>
+                    {{else}}
+                    <div class="h-48 sm:h-56 bg-gradient-to-br from-color-primary to-color-secondary"></div>
+                    {{/if}}
+
+                    {{! Contenu de la carte }}
+                    <div class="p-5 sm:p-6">
+                        {{! Tags (si disponibles) }}
+                        {{#if primary_tag}}
+                        <span class="article-theme inline-block bg-primary text-primary text-xs font-bold px-3 py-1 rounded-full mb-3">
+                            {{primary_tag.name}}
+                        </span>
+                        {{/if}}
+
+                        {{! Titre }}
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">
+                            {{title}}
+                        </h2>
+
+                        {{! Excerpt }}
+                        {{#if excerpt}}
+                        <p class="text-gray-600 mb-4 line-clamp-2 text-sm sm:text-base">
+                            {{excerpt}}
+                        </p>
+                        {{/if}}
+
+                        {{! Footer avec date et bouton }}
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <time
+                                datetime="{{date format='YYYY-MM-DD'}}"
+                                class="text-sm text-gray-500 flex items-center gap-2"
+                            >
+                                <i data-lucide="calendar" class="size-4"></i>
+                                {{date format="DD MMM YYYY"}}
+                            </time>
+
+                            <span class="inline-flex items-center gap-2 bg-primary text-white text-sm font-semibold px-5 py-2 rounded-full hover:opacity-90 transition-opacity">
+                                En savoir plus
+                                <i data-lucide="arrow-right" class="size-4"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            {{/foreach}}
+        </div>
+
+        {{! Pagination }}
+        <div class="flex justify-center pb-8" id="articlesPagination">
+            {{pagination}}
+        </div>
+
+        <p id="noResults" class="hidden text-center text-gray-500 font-semibold pb-8">
+            Aucun article ne correspond a votre recherche.
+        </p>
+    </div>
+</div>
+
+<script>
+    // Utilise l'API Ghost native via ghost-content-api
+    const searchInput = document.getElementById('searchInput');
+    const themeFilter = document.getElementById('themeFilter');
+    const noResults = document.getElementById('noResults');
+    const grid = document.getElementById('articlesGrid');
+    const pagination = document.getElementById('articlesPagination');
+    const initialGridHtml = grid?.innerHTML || '';
+
+    let allPosts = [];
+    let hasLoadedAllPosts = false;
+
+    function createPostCard(post) {
+        const article = document.createElement('article');
+        article.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1';
+        article.dataset.theme = post.primary_tag?.name || '';
+
+        const link = document.createElement('a');
+        link.href = post.url;
+        link.className = 'block';
+
+        // Image
+        const imageDiv = document.createElement('div');
+        if (post.feature_image) {
+            imageDiv.className = 'relative h-48 sm:h-56 overflow-hidden bg-gray-100';
+            const img = document.createElement('img');
+            img.src = post.feature_image;
+            img.alt = post.title;
+            img.className = 'w-full h-full object-cover transition-transform duration-300 hover:scale-105';
+            const overlay = document.createElement('div');
+            overlay.className = 'absolute inset-0 bg-gradient-to-t from-black/30 to-transparent';
+            imageDiv.append(img, overlay);
+        } else {
+            imageDiv.className = 'h-48 sm:h-56 bg-gradient-to-br from-color-primary to-color-secondary';
+        }
+
+        // Contenu
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'p-5 sm:p-6';
+
+        // Tag
+        if (post.primary_tag) {
+            const tag = document.createElement('span');
+            tag.className = 'article-theme inline-block bg-primary text-primary text-xs font-bold px-3 py-1 rounded-full mb-3';
+            tag.textContent = post.primary_tag.name;
+            contentDiv.appendChild(tag);
+        }
+
+        // Titre
+        const title = document.createElement('h2');
+        title.className = 'text-xl sm:text-2xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors';
+        title.textContent = post.title;
+        contentDiv.appendChild(title);
+
+        // Excerpt
+        if (post.excerpt) {
+            const excerpt = document.createElement('p');
+            excerpt.className = 'text-gray-600 mb-4 line-clamp-2 text-sm sm:text-base';
+            excerpt.textContent = post.excerpt;
+            contentDiv.appendChild(excerpt);
+        }
+
+        // Footer
+        const footer = document.createElement('div');
+        footer.className = 'flex items-center justify-between pt-4 border-t border-gray-100';
+
+        const time = document.createElement('time');
+        time.dateTime = post.published_at.split('T')[0];
+        time.className = 'text-sm text-gray-500 flex items-center gap-2';
+        const calendarIcon = document.createElement('i');
+        calendarIcon.setAttribute('data-lucide', 'calendar');
+        calendarIcon.className = 'size-4';
+        time.append(calendarIcon, new Date(post.published_at).toLocaleDateString('fr-FR', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        }));
+
+        const button = document.createElement('span');
+        button.className = 'inline-flex items-center gap-2 bg-primary text-white text-sm font-semibold px-5 py-2 rounded-full hover:opacity-90 transition-opacity';
+        button.textContent = 'En savoir plus';
+        const arrowIcon = document.createElement('i');
+        arrowIcon.setAttribute('data-lucide', 'arrow-right');
+        arrowIcon.className = 'size-4';
+        button.appendChild(arrowIcon);
+
+        footer.append(time, button);
+        contentDiv.appendChild(footer);
+
+        link.append(imageDiv, contentDiv);
+        article.appendChild(link);
+
+        // Re-initialise les icones Lucide pour ce nouvel article
+        if (window.lucide) {
+            window.lucide.createIcons({ icons: { calendar: window.lucide.Calendar, 'arrow-right': window.lucide.ArrowRight }});
+        }
+
+        return article;
+    }
+
+    async function fetchAllPosts() {
+        if (hasLoadedAllPosts) return allPosts;
+
+        try {
+            // Utilise l'API Ghost via GhostContentAPI si disponible
+            const ghostScript = document.querySelector('script[data-ghost-content-api]');
+            const apiUrl = ghostScript?.dataset.api || window.ghost?.url?.api?.() || '/ghost/api/content';
+            const apiKey = ghostScript?.dataset.key;
+
+            if (!apiKey) {
+                console.error('Cle API Ghost introuvable');
+                return [];
+            }
+
+            let page = 1;
+            const posts = [];
+
+            // Pagination automatique via l'API Ghost
+            while (page) {
+                const response = await fetch(`${apiUrl}/posts/?key=${apiKey}&limit=100&page=${page}&include=tags`);
+
+                if (!response.ok) throw new Error(`API Ghost: ${response.status}`);
+
+                const data = await response.json();
+                posts.push(...data.posts);
+                page = data.meta?.pagination?.next || null;
+            }
+
+            allPosts = posts;
+            hasLoadedAllPosts = true;
+            return allPosts;
+        } catch (error) {
+            console.error('Erreur lors du chargement des posts:', error);
+            return [];
+        }
+    }
+
+    function populateThemeFilter(posts) {
+        if (!themeFilter) return;
+
+        const themes = [...new Set(
+            posts
+                .map(post => post.primary_tag?.name)
+                .filter(Boolean)
+        )].sort((a, b) => a.localeCompare(b, 'fr'));
+
+        themeFilter.innerHTML = '<option value="">Tous les themes</option>';
+        themes.forEach(theme => {
+            const option = document.createElement('option');
+            option.value = theme.toLowerCase();
+            option.textContent = theme;
+            themeFilter.appendChild(option);
+        });
+    }
+
+    function restoreInitialState() {
+        if (grid) grid.innerHTML = initialGridHtml;
+        pagination?.classList.remove('hidden');
+        noResults?.classList.add('hidden');
+    }
+
+    async function applyFilters() {
+        const searchTerm = searchInput?.value.trim().toLowerCase() || '';
+        const selectedTheme = themeFilter?.value.toLowerCase() || '';
+
+        // Restaure l'etat initial si aucun filtre actif
+        if (!searchTerm && !selectedTheme) {
+            restoreInitialState();
+            return;
+        }
+
+        try {
+            const posts = await fetchAllPosts();
+            populateThemeFilter(posts);
+
+            // Filtre les posts selon les criteres
+            const filteredPosts = posts.filter(post => {
+                const title = post.title.toLowerCase();
+                const theme = (post.primary_tag?.name || '').toLowerCase();
+                const matchesSearch = !searchTerm || title.includes(searchTerm) || theme.includes(searchTerm);
+                const matchesTheme = !selectedTheme || theme === selectedTheme;
+                return matchesSearch && matchesTheme;
+            });
+
+            // Mise a jour du DOM
+            if (grid) {
+                grid.innerHTML = '';
+                filteredPosts.forEach(post => grid.appendChild(createPostCard(post)));
+            }
+
+            pagination?.classList.add('hidden');
+            noResults?.classList.toggle('hidden', filteredPosts.length > 0);
+        } catch (error) {
+            console.error('Erreur lors du filtrage:', error);
+            restoreInitialState();
+        }
+    }
+
+    // Initialisation
+    fetchAllPosts().then(populateThemeFilter).catch(console.error);
+    searchInput?.addEventListener('input', applyFilters);
+    themeFilter?.addEventListener('change', applyFilters);
+</script>
