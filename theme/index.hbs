@@ -40,51 +40,46 @@ into the {body} tag of the default.hbs template }}
     <div class="flex flex-col justify-center lg:flex-row lg:px-20 lg:gap-40">
       <div class="p-6 max-w-140">
         <h2 class="font-bold text-2xl mb-6 text-center md:text-left uppercase">Découvrez <br> nos derniers articles.</h2>
-        <div class="posts-list space-y-6">
+        <div class="posts-list space-y-6 divide-y">
           {{#foreach posts}}
             <article
-              class="post-card overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition hover:shadow-md"
+              class="post-card pb-6"
             >
               <a href="{{url}}" class="block">
                 {{#if feature_image}}
-                  <div class="post-card-image h-48 overflow-hidden">
-                    <img
-                      src="{{feature_image}}"
-                      alt="{{title}}"
-                      class="h-full w-full object-cover"
-                    />
-                  </div>
+                  <img
+                    src="{{feature_image}}"
+                    alt="{{title}}"
+                    class="post-card-image h-80 rounded-3xl object-cover"
+                  />
                 {{/if}}
-                <div class="post-card-content p-6">
-                  <h2 class="post-card-title mb-3 text-2xl font-bold text-gray-900">
+                <div class="post-card-content mt-2">
+                  <h2 class="post-card-title mb-1 text-2xl font-bold text-gray-900">
                     {{title}}
                   </h2>
+                  {{#if excerpt}}
+                    <p class="post-card-excerpt mb-4 text-gray-600">{{excerpt}}</p>
+                  {{/if}}
                   <div
-                    class="post-card-meta mb-3 flex items-center gap-4 text-sm text-gray-500"
+                    class="post-card-meta justify-between flex items-center gap-4"
                   >
                     <time datetime="{{date format="YYYY-MM-DD"}}">
                       {{date format="DD MMMM YYYY"}}
                     </time>
-                    {{#if primary_author}}
-                      <span class="post-card-author">par {{primary_author.name}}</span>
-                    {{/if}}
+                    <span
+                      class="rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+                    >
+                      En savoir plus
+                    </span>
                   </div>
-                  {{#if excerpt}}
-                    <p class="post-card-excerpt mb-4 text-gray-600">{{excerpt}}</p>
-                  {{/if}}
-                  <span
-                    class="rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white transition hover:opacity-90"
-                  >
-                    En savoir plus
-                  </span>
                 </div>
               </a>
             </article>
           {{/foreach}}
-
-          {{! Pagination }}
-          {{pagination}}
         </div>
+
+        {{! Pagination }}
+        {{pagination}}
       </div>
       
       <div class="lg:order-first sticky top-6 lg:w-120 shrink-0 lg:h-180 lg:pb-20 rounded-t-xl lg:rounded-xl -mb-6 bg-gray-200 p-6 flex flex-col justify-between h-120 items-end">
