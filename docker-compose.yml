@@ -9,7 +9,6 @@ services:
     environment:
       # URL locale pour que les liens marchent
       url: http://localhost:2368
-      # Important: Mode dev pour éviter le cache agressif des templates
       NODE_ENV: development
       # Configuration DB (SQLite par défaut, suffisant pour le dev)
       database__client: sqlite3
@@ -17,6 +16,7 @@ services:
     volumes:
       # 1. On stocke les données (images, db) dans un volume Docker (caché) pour ne pas polluer le dossier projet.
       - ghost-data:/var/lib/ghost/content
+      - ./routes.yaml:/var/lib/ghost/content/settings/routes.yaml
       
       # 2. On injecte le dossier theme local directement dans le dossier themes de Ghost
       - ./theme:/var/lib/ghost/content/themes/random-theme

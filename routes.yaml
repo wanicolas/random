@@ -1,0 +1,15 @@
+routes:
+  /article/:
+    controller: channel
+    template: article
+    limit: 12
+
+collections:
+  /:
+    permalink: /{slug}/
+    template: index
+    filter: 'tag:-[hash-news]'
+
+taxonomies:
+  tag: /tag/{slug}/
+  author: /author/{slug}/
