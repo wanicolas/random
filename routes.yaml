@@ -1,5 +1,5 @@
 routes:
-  /article/:
+  /page-article/:
     controller: channel
     template: listArticles
     limit: 12
