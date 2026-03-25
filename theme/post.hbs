@@ -11,21 +11,21 @@
 				class="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-80 md:h-96"
 			/>
 
-			{{! Tags sur l'image }}
-			{{#if tags}}
-			<div
-				class="text-secondary absolute top-0 right-0 flex items-center gap-2 rounded-bl-2xl bg-white px-3 py-2 text-xs font-semibold"
-			>
-				<i data-lucide="tag" class="size-3.5"></i>
-				{{#foreach tags}}
-				<span>
-					{{ name }}
-				</span>
-				{{/foreach}}
-			</div>
-			{{/if}}
-		</div>
-		{{/if}}
+{{#post}}
+<article class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    {{! Container principal }}
+    <div class="max-w-4xl mx-auto">
+        
+        {{! Bouton retour }}
+        <div class="px-4 sm:px-6 lg:px-8 pt-6">
+                <a href="/article/" 
+               class="inline-flex items-center gap-2 bg-[var(--color-primary)] text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full hover:scale-105 hover:shadow-lg transition-all duration-200 shadow-md">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Retour
+            </a>
+        </div>
 
 		{{! Ligne décorative rose }}
 		<div class="bg-primary mx-auto my-10 h-0.75 w-52 rounded-full"></div>
