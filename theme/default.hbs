@@ -23,19 +23,6 @@
 
 	<body class="{{body_class}}">
 		<header class="site-header">
-			<div class="container">
-				<h1 class="site-title">
-					<a href="{{@site.url}}">
-						{{@site.title}}
-					</a>
-				</h1>
-				<p class="site-description">
-					{{@site.description}}
-				</p>
-			</div>
-		</header>
-
-		<main class="site-main">
       <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
         <menu class="flex gap-5 items-center rounded-full shadow-xl py-2 px-4 bg-gray-200/10 backdrop-blur-sm border-3 border-white/50">
           <a href="{{@site.url}}" aria-label="Accueil" class="hover:scale-110 transition-transform">
@@ -44,7 +31,26 @@
           <a href="/page-article/" aria-label="Actualités" class="hover:scale-110 transition-transform">
             <i data-lucide="newspaper" class="size-8"></i>
           </a>
-          <a href="{{@site.url}}" aria-label="Accueil" class="w-max"><img src="{{asset 'img/logo-random-quadri.png'}}" class="max-h-8 max-w-8 object-contain"></a>
+          <a href="#" id="nav-random-post-btn" aria-label="Voir un article aléatoire" class="w-max hover:scale-110 transition-transform"><img src="./assets/img/logo-random-quadri.png" class="max-h-8 max-w-8 object-contain"></a>
+          {{#get "posts" limit="all"}}
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const navPostUrls = [
+                {{#foreach posts}}
+                "{{url}}",
+                {{/foreach}}
+              ];
+              const navBtn = document.getElementById('nav-random-post-btn');
+              if (navBtn && navPostUrls.length > 0) {
+                navBtn.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  const randomUrl = navPostUrls[Math.floor(Math.random() * navPostUrls.length)];
+                  window.location.href = randomUrl;
+                });
+              }
+            });
+          </script>
+          {{/get}}
           <a href="{{@site.url}}" aria-label="Article" class="hover:scale-110 transition-transform">
             <i data-lucide="book-open" class="size-8"></i>
           </a>
@@ -54,8 +60,10 @@
         </menu>
       </nav>
 
+			{{#is "home"}}
+			{{else}}
 			<nav class="hidden lg:block">
-        <menu class="px-20 py-6 flex items-center justify-between bg-primary">
+        <menu class="px-40 rounded-b-xl py-6 flex items-center justify-between bg-primary">
           <a href="/" aria-label="Accueil">
             <img src="{{@site.logo}}" class="max-h-20 object-contain max-w-20" />
           </a>
@@ -64,9 +72,17 @@
           </div>
         </menu>
       </nav>
-		</header>
+			{{/is}}
 
 		<main class="site-main p-6 lg:p-20">  
+      <svg width="311" height="853" viewBox="0 0 311 853" fill="none" xmlns="http://www.w3.org/2000/svg" class="hidden lg:block h-fit w-30 absolute left-0">
+      <path d="M292.974 303.275C262.624 340.593 182.179 292.99 148.76 331.793C111.685 374.863 183.589 464.787 145.504 506.655C115.552 539.522 54.2586 502.546 26.2525 535.638C-1.71559 568.717 47.0405 620.407 35.9226 685.746C18.9146 785.791 -130.665 871.415 -185.554 837.78C-233.326 808.518 -169.312 713.643 -191.501 487.848C-204.567 354.944 -234.502 308.769 -199.75 262.802C-143.179 187.888 -7.44281 236.15 26.9231 167.091C55.2305 110.252 -19.9781 43.886 4.74002 16.7507C34.1312 -15.4662 176.785 38.5255 252.201 146.329C281.742 188.53 321.461 268.296 292.999 303.287L292.974 303.275Z" stroke="#F1892A" stroke-width="15" stroke-miterlimit="10"/>
+      </svg>
+
+      <svg width="275" height="762" viewBox="0 0 275 762" fill="none" xmlns="http://www.w3.org/2000/svg" class="hidden lg:block h-fit w-30 absolute right-0 top-140">
+        <path d="M420.718 636.641C418.853 692.014 237.249 790.94 133.898 739.905C62.3426 704.575 60.2643 613.096 60.201 601.435C59.739 528.186 105.804 512.076 115.49 437.848C125.138 363.327 82.8159 347.822 42.1715 224.029C10.518 127.705 -3.60391 16.0762 17.5706 7.95346C37.6472 0.18077 63.4832 95.5283 179.753 195.529C246.15 252.689 270.638 249.91 285.172 288.258C317.231 372.739 217.438 436.016 243.893 513.228C273.6 600.089 422.484 586.166 420.718 636.641Z" stroke="#F1892A" stroke-width="15" stroke-miterlimit="10"/>
+      </svg>
+
       {{! Tout le contenu de la page sera injecté ici }}
       {{{body}}}
 		</main>
@@ -78,8 +94,8 @@
         </menu>
       </nav>
 
-      <div class="lg:order-first flex flex-col items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-7 mx-auto mb-6"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+      <div class="lg:order-first flex flex-col items-center gap-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-7"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
   
         {{#if @site.logo}}
           <a href="{{@site.url}}" aria-label="Accueil" class="lg:order-first">
