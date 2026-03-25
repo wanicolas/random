@@ -5,8 +5,8 @@
 	/* Couleurs */
 	--color-primary: #d50169; /* Rose */
 	--color-secondary: #f18825; /* Orange */
-	--color-black: #020a0a;
-	--color-white: #f0f0f0;
+	--color-fake-black: #020a0a;
+	--color-fake-white: #f0f0f0;
 
 	/* Fonts */
 	--font-sans:
