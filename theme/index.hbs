@@ -37,20 +37,20 @@ into the {body} tag of the default.hbs template }}
       <div class="border-b w-full md:border-b-4 md:border-gray-300 mb-6 lg:mb-12"></div>
     </div>
   
-    <div class="flex flex-col justify-center lg:flex-row lg:px-20 lg:gap-40">
-      <div class="p-6 max-w-140">
-        <h2 class="font-bold text-2xl mb-6 text-center md:text-left uppercase">Découvrez <br> nos derniers articles.</h2>
-        <div class="posts-list space-y-6 divide-y">
+    <div class="flex flex-col justify-center lg:flex-row lg:px-20 lg:gap-20">
+      <div class="p-6 space-y-6">
+        <h2 class="font-bold text-2xl text-center md:text-left uppercase">Découvrez <br> nos derniers articles.</h2>
+        <div class="posts-list grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-1 lg:max-w-140">
           {{#foreach posts}}
             <article
-              class="post-card pb-6"
+              class="post-card flex flex-col gap-8 justify-between"
             >
               <a href="{{url}}" class="block">
                 {{#if feature_image}}
                   <img
                     src="{{feature_image}}"
                     alt="{{title}}"
-                    class="post-card-image h-80 rounded-3xl object-cover"
+                    class="post-card-image h-46 w-full rounded-3xl object-cover"
                   />
                 {{/if}}
                 <div class="post-card-content mt-2">
@@ -74,6 +74,8 @@ into the {body} tag of the default.hbs template }}
                   </div>
                 </div>
               </a>
+
+              <hr>
             </article>
           {{/foreach}}
         </div>
