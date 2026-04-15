@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* Polices custom */
+@font-face {
+	font-family: "Univers";
+	src: url("../fonts/UniversRegular.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Univers";
+	src: url("../fonts/UniversLight.woff2") format("woff2");
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Univers";
+	src: url("../fonts/UniversBold.woff2") format("woff2");
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Univers";
+	src: url("../fonts/UniversCnRg.woff2") format("woff2");
+	font-weight: 400;
+	font-stretch: condensed;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Univers";
+	src: url("../fonts/UniversCnBold.woff2") format("woff2");
+	font-weight: 700;
+	font-stretch: condensed;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Monigue";
+	src: url("../fonts/Monigue.woff2") format("woff2");
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Variables Tailwind */
+@theme {
+	/* Couleurs */
+	--color-primary: #d50169; /* Rose */
+	--color-secondary: #f18825; /* Orange */
+	--color-black: #020a0a;
+	--color-white: #f0f0f0;
+
+	/* Fonts */
+	--font-sans:
+		"Univers", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-primary:
+		"Monigue", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-secondary:
+		"Monigue", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Styles globaux */
+h1,
+h2,
+h3 {
+	@apply font-primary;
+}
