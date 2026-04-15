@@ -70,5 +70,5 @@ h4,
 h5,
 h6 {
 	@apply font-title;
-	@apply font-primary;
+	letter-spacing: 0.0625em;
 }
