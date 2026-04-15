@@ -1,94 +1,62 @@
 {{!< default}}
 
-{{! Page Actualités avec grille d'articles }}
-
-<div class="min-h-screen pb-24">
-    {{! Header avec titre centre et ligne decorative }}
-    <header class="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-        <div class="flex flex-col items-center text-center mb-8">
-            <h1 class="text-4xl sm:text-5xl font-bold text-primary">Actualites</h1>
-            <div class="w-52 h-1 bg-primary mt-4 rounded-full"></div>
-        </div>
-
-        {{! Barre de recherche et filtres a droite }}
-        <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3 md:gap-4 max-w-5xl mx-auto">
-            <div class="relative flex-1">
-                <input
-                    type="search"
-                    placeholder="Rechercher par titre ou theme..."
-                    class="w-full px-4 py-3 pr-12 rounded-full border-2 border-primary-40 focus:border-color-primary focus:outline-none text-gray-700 placeholder-gray-400 bg-white"
-                    id="searchInput"
-                />
-                <i data-lucide="search" class="absolute right-4 top-1/2 -translate-y-1/2 size-5 text-primary"></i>
+<section class="relative min-h-screen overflow-hidden px-4 pb-24 pt-8 sm:px-6 lg:px-8 lg:pt-14">
+    <div class="relative mx-auto w-full max-w-6xl">
+        <header class="mb-8 lg:mb-10">
+            <div class="mb-7 flex flex-col items-center gap-3">
+                <h1 class="text-5xl font-bold text-primary sm:text-6xl">Articles</h1>
+                <div class="h-1 w-52 rounded-full bg-primary"></div>
             </div>
 
-            <div class="md:ml-auto flex items-center gap-2">
-                <i data-lucide="filter" class="size-5 text-primary"></i>
-                <select
-                    id="themeFilter"
-                    class="min-w-44 px-4 py-3 rounded-full border-2 border-primary bg-white text-gray-700 font-semibold focus:border-primary focus:outline-none"
-                >
-                    <option value="">Tous les themes</option>
-                </select>
-            </div>
-        </div>
-    </header>
+            <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-8">
+                <label class="relative col-span-1" aria-label="Recherche d'articles">
+                    <input
+                        id="searchInput"
+                        type="search"
+                        placeholder="Rechercher..."
+                        class="w-full rounded-full border-2 border-primary bg-transparent py-2 pl-11 pr-4 text-sm font-semibold text-fake-black placeholder:font-semibold placeholder:text-[#d0cfd2] focus:outline-none"
+                    />
+                    <i data-lucide="search" class="absolute left-3 top-1/2 size-5 -translate-y-1/2 text-primary"></i>
+                </label>
 
-    {{! Grille d'articles - 3 colonnes }}
-    <div class="px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12" id="articlesGrid">
+                <div class="hidden lg:flex lg:flex-1"></div>
+
+                <label class="relative inline-flex items-center lg:ml-auto" aria-label="Filtre par thème">
+                    <i data-lucide="filter" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-white"></i>
+                    <select
+                        id="themeFilter"
+                        class="min-w-[7.5rem] appearance-none rounded-full bg-primary py-2 pl-9 pr-8 text-sm font-bold text-white outline-none"
+                    >
+                        <option value="">Filtres</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-white"></i>
+                </label>
+            </div>
+        </header>
+
+        <div id="articlesGrid" class="grid grid-cols-1 gap-0 lg:grid-cols-3 lg:gap-x-9 lg:gap-y-12">
             {{#foreach posts}}
-            <article class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1" data-theme="{{#if primary_tag}}{{primary_tag.name}}{{/if}}">
+            <article class="group border-b-2 border-neutral-300 py-6 first:pt-0 last:border-b-0 lg:border-b-0 lg:py-0" data-theme="{{#if primary_tag}}{{primary_tag.name}}{{/if}}">
                 <a href="{{url}}" class="block">
-                    {{! Image de l'article }}
-                    {{#if feature_image}}
-                    <div class="relative h-48 sm:h-56 overflow-hidden bg-gray-100">
-                        <img
-                            src="{{feature_image}}"
-                            alt="{{title}}"
-                            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                        />
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                    </div>
-                    {{else}}
-                    <div class="h-48 sm:h-56 bg-gradient-to-br from-color-primary to-color-secondary"></div>
-                    {{/if}}
+                    <div class="flex items-start gap-4 lg:block lg:space-y-3">
+                        <div class="h-24 w-[8.5rem] shrink-0 overflow-hidden rounded-2xl bg-neutral-300 sm:h-28 sm:w-[9.5rem] lg:h-[11.75rem] lg:w-full lg:rounded-xl">
+                            {{#if feature_image}}
+                            <img src="{{feature_image}}" alt="{{title}}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                            {{else}}
+                            <div class="h-full w-full bg-gradient-to-br from-primary to-secondary"></div>
+                            {{/if}}
+                        </div>
 
-                    {{! Contenu de la carte }}
-                    <div class="p-5 sm:p-6">
-                        {{! Tags (si disponibles) }}
-                        {{#if primary_tag}}
-                        <span class="article-theme inline-block bg-primary text-white  text-xs font-bold px-3 py-1 rounded-full mb-3">
-                            {{primary_tag.name}}
-                        </span>
-                        {{/if}}
-
-                        {{! Titre }}
-                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">
-                            {{title}}
-                        </h2>
-
-                        {{! Excerpt }}
-                        {{#if excerpt}}
-                        <p class="text-gray-600 mb-4 line-clamp-2 text-sm sm:text-base">
-                            {{excerpt}}
-                        </p>
-                        {{/if}}
-
-                        {{! Footer avec date et bouton }}
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <time
-                                datetime="{{date format='YYYY-MM-DD'}}"
-                                class="text-sm text-gray-500 flex items-center gap-2"
-                            >
-                                <i data-lucide="calendar" class="size-4"></i>
-                                {{date format="DD MMM YYYY"}}
-                            </time>
-
-                            <span class="inline-flex items-center gap-2 bg-primary text-white text-sm font-semibold px-5 py-2 rounded-full hover:opacity-90 transition-opacity">
-                                En savoir plus
-                                <i data-lucide="arrow-right" class="size-4"></i>
-                            </span>
+                        <div class="min-w-0 flex-1 lg:space-y-2">
+                            <h2 class="!font-sans text-[2.25rem] leading-[0.95] font-bold text-fake-black line-clamp-2 lg:text-4xl lg:leading-[1.04]">
+                                {{title}}
+                            </h2>
+                            <div class="mt-3 flex items-center justify-between gap-4 lg:mt-2">
+                                <time datetime="{{date format='YYYY-MM-DD'}}" class="text-xs font-light text-black/55 sm:text-sm">
+                                    {{date format="DD.MM.YYYY"}}
+                                </time>
+                            <span class="inline-flex shrink-0 items-center rounded-full bg-primary px-2 py-1 text-sm font-bold leading-none text-white sm:px-3 whitespace-nowrap">En savoir plus</span>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -96,209 +64,17 @@
             {{/foreach}}
         </div>
 
-        {{! Pagination }}
-        <div class="flex justify-center pb-8" id="articlesPagination">
-            {{pagination}}
+        <div
+            id="articlesPagination"
+            class="mt-8 flex justify-center pb-4 lg:mt-10"
+            data-current-page="{{pagination.page}}"
+            data-total-pages="{{pagination.pages}}"
+        >
+            <div class="hidden" id="ghostPaginationFallback">{{pagination}}</div>
         </div>
 
-        <p id="noResults" class="hidden text-center text-gray-500 font-semibold pb-8">
-            Aucun article ne correspond a votre recherche.
+        <p id="noResults" class="hidden pb-8 text-center text-base font-semibold text-black/60">
+            Aucun article ne correspond à votre recherche.
         </p>
     </div>
-</div>
-
-<script>
-    // Utilise l'API Ghost Content API pour la recherche
-    const searchInput = document.getElementById('searchInput');
-    const themeFilter = document.getElementById('themeFilter');
-    const noResults = document.getElementById('noResults');
-    const grid = document.getElementById('articlesGrid');
-    const pagination = document.getElementById('articlesPagination');
-    const initialGridHtml = grid?.innerHTML || '';
-
-    let allPosts = [];
-    let hasLoadedAllPosts = false;
-
-    // Crée une carte d'article en JavaScript (même structure que Handlebars)
-    function createPostCard(post) {
-        const article = document.createElement('article');
-        article.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1';
-        article.dataset.theme = post.primary_tag?.name || '';
-
-        const link = document.createElement('a');
-        link.href = post.url;
-        link.className = 'block';
-
-        // Image
-        const imageDiv = document.createElement('div');
-        if (post.feature_image) {
-            imageDiv.className = 'relative h-48 sm:h-56 overflow-hidden bg-gray-100';
-            imageDiv.innerHTML = `
-                <img src="${post.feature_image}" alt="${post.title}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-            `;
-        } else {
-            imageDiv.className = 'h-48 sm:h-56 bg-gradient-to-br from-color-primary to-color-secondary';
-        }
-
-        // Contenu
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'p-5 sm:p-6';
-
-        // Tag
-        if (post.primary_tag) {
-            const tagHtml = `<span class="article-theme inline-block bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full mb-3">${post.primary_tag.name}</span>`;
-            contentDiv.innerHTML += tagHtml;
-        }
-
-        // Titre
-        const titleHtml = `<h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">${post.title}</h2>`;
-        contentDiv.innerHTML += titleHtml;
-
-        // Excerpt
-        if (post.excerpt) {
-            const excerptHtml = `<p class="text-gray-600 mb-4 line-clamp-2 text-sm sm:text-base">${post.excerpt}</p>`;
-            contentDiv.innerHTML += excerptHtml;
-        }
-
-        // Footer avec date et bouton
-        const publishedDate = new Date(post.published_at).toLocaleDateString('fr-FR', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric'
-        });
-        const footerHtml = `
-            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                <time datetime="${post.published_at.split('T')[0]}" class="text-sm text-gray-500 flex items-center gap-2">
-                    <i data-lucide="calendar" class="size-4"></i>
-                    ${publishedDate}
-                </time>
-                <span class="inline-flex items-center gap-2 bg-primary text-white text-sm font-semibold px-5 py-2 rounded-full hover:opacity-90 transition-opacity">
-                    En savoir plus
-                    <i data-lucide="arrow-right" class="size-4"></i>
-                </span>
-            </div>
-        `;
-        contentDiv.innerHTML += footerHtml;
-
-        link.append(imageDiv, contentDiv);
-        article.appendChild(link);
-
-        return article;
-    }
-
-    async function fetchAllPosts() {
-        if (hasLoadedAllPosts) return allPosts;
-
-        try {
-            // Récupère l'URL et la clé API depuis Ghost
-            const apiUrl = '{{@site.url}}/ghost/api/content';
-            const apiKey = '{{@site.key}}';
-
-            if (!apiKey || apiKey === '') {
-                console.error('Clé API Ghost introuvable');
-                return [];
-            }
-
-            let page = 1;
-            const posts = [];
-
-            // Pagination automatique
-            while (page) {
-                const response = await fetch(`${apiUrl}/posts/?key=${apiKey}&limit=100&page=${page}&include=tags`);
-
-                if (!response.ok) {
-                    console.error(`API Ghost error: ${response.status}`);
-                    break;
-                }
-
-                const data = await response.json();
-                posts.push(...data.posts);
-                page = data.meta?.pagination?.next || null;
-            }
-
-            allPosts = posts;
-            hasLoadedAllPosts = true;
-            return allPosts;
-        } catch (error) {
-            console.error('Erreur lors du chargement des posts:', error);
-            return [];
-        }
-    }
-
-    function populateThemeFilter(posts) {
-        if (!themeFilter) return;
-
-        const themes = [...new Set(
-            posts
-                .map(post => post.primary_tag?.name)
-                .filter(Boolean)
-        )].sort((a, b) => a.localeCompare(b, 'fr'));
-
-        themeFilter.innerHTML = '<option value="">Tous les themes</option>';
-        themes.forEach(theme => {
-            const option = document.createElement('option');
-            option.value = theme.toLowerCase();
-            option.textContent = theme;
-            themeFilter.appendChild(option);
-        });
-    }
-
-    function restoreInitialState() {
-        if (grid) grid.innerHTML = initialGridHtml;
-        pagination?.classList.remove('hidden');
-        noResults?.classList.add('hidden');
-
-        // Réinitialise les icônes Lucide
-        if (window.lucide) {
-            lucide.createIcons();
-        }
-    }
-
-    async function applyFilters() {
-        const searchTerm = searchInput?.value.trim().toLowerCase() || '';
-        const selectedTheme = themeFilter?.value.toLowerCase() || '';
-
-        // Restaure l'état initial si aucun filtre actif
-        if (!searchTerm && !selectedTheme) {
-            restoreInitialState();
-            return;
-        }
-
-        try {
-            const posts = await fetchAllPosts();
-            populateThemeFilter(posts);
-
-            // Filtre les posts
-            const filteredPosts = posts.filter(post => {
-                const title = post.title.toLowerCase();
-                const theme = (post.primary_tag?.name || '').toLowerCase();
-                const matchesSearch = !searchTerm || title.includes(searchTerm) || theme.includes(searchTerm);
-                const matchesTheme = !selectedTheme || theme === selectedTheme;
-                return matchesSearch && matchesTheme;
-            });
-
-            // Mise à jour du DOM
-            if (grid) {
-                grid.innerHTML = '';
-                filteredPosts.forEach(post => grid.appendChild(createPostCard(post)));
-
-                // Réinitialise les icônes Lucide
-                if (window.lucide) {
-                    lucide.createIcons();
-                }
-            }
-
-            pagination?.classList.add('hidden');
-            noResults?.classList.toggle('hidden', filteredPosts.length > 0);
-        } catch (error) {
-            console.error('Erreur lors du filtrage:', error);
-            restoreInitialState();
-        }
-    }
-
-    // Initialisation
-    fetchAllPosts().then(populateThemeFilter).catch(console.error);
-    searchInput?.addEventListener('input', applyFilters);
-    themeFilter?.addEventListener('change', applyFilters);
-</script>
+</section>  
