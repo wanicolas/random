@@ -57,10 +57,7 @@
 	--font-sans:
 		"Univers", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-primary:
-		"Monigue", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-secondary:
+	--font-title:
 		"Monigue", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
@@ -69,5 +66,5 @@
 h1,
 h2,
 h3 {
-	@apply font-primary;
+	@apply font-title;
 }
