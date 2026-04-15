@@ -1,0 +1,30 @@
+name: "Formatting and Test checks"
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  Formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20.x
+      - name: Installing dependencies from lockfile
+        run: cd theme && npm install
+      - name: Running Formatting
+        run: cd theme && npm run format:check
+
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20.x
+      - name: Installing dependencies from lockfile
+        run: cd theme && npm install
+      - name: Running Test
+        run: cd theme && npm run test

@@ -1,0 +1,30 @@
+name: Deploy Theme
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # 1. Installer Node et les dépendances du thème, puis builder Tailwind
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install and Build Tailwind
+        run: |
+          cd theme
+          npm install
+          npm run build
+
+      # 2. Déployer le thème
+      # - name: Deploy Ghost Theme
+      #   uses: TryGhost/action-deploy-theme@v1
+      #   with:
+      #     api-url: ${{ secrets.GHOST_ADMIN_API_URL }}
+      #     api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}
+      #     theme-path: "./theme" # Important: on déploie le dossier thème
