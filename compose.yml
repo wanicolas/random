@@ -3,7 +3,7 @@ services:
     image: ghost:6-alpine
     restart: always
     ports:
-      - ${GHOST_LOCAL_PORT}:2368
+      - 127.0.0.1:${GHOST_LOCAL_PORT}:2368
     environment:
       url: ${GHOST_LOCAL_URL}
       NODE_ENV: ${NODE_ENV}
