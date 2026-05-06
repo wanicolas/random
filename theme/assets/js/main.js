@@ -1,5 +1,3 @@
-// Fichier JavaScript principal pour ton thème
-
 // Import all Lucide icons you need to reduce bundle size by tree-shaking the library.
 import {
 	createIcons,
@@ -16,9 +14,7 @@ import {
 } from "lucide";
 
 document.addEventListener("DOMContentLoaded", function () {
-	console.log("Thème Ghost chargé !");
-
-	// Exemple : Smooth scroll pour les ancres
+	// Smooth scroll pour les ancres
 	document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 		anchor.addEventListener("click", function (e) {
 			e.preventDefault();
@@ -30,8 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		});
 	});
-
-	// Tu peux ajouter tes scripts personnalisés ici
 
 	createIcons({
 		icons: {

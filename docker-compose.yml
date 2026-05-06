@@ -2,10 +2,10 @@ version: '3.1'
 
 services:
   ghost:
-    image: ghost:alpine
+    image: ghost:6-alpine
     restart: always
     ports:
-      - 2368:2368
+      - ${GHOST_LOCAL_PORT}:2368
     environment:
       url: ${GHOST_LOCAL_URL}
       NODE_ENV: ${NODE_ENV}
@@ -22,7 +22,7 @@ services:
 
   # Service Node.js pour builder le thème (Tailwind CSS + outils npm)
   theme-builder:
-    image: node:20-alpine
+    image: node:22-alpine
     working_dir: /theme
     volumes:
       - ./theme:/theme
