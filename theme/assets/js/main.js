@@ -11,6 +11,8 @@ import {
 	MousePointerClick,
 	ArrowRight,
 	Search,
+	Mail,
+	Send,
 } from "lucide";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -39,6 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			MousePointerClick,
 			ArrowRight,
 			Search,
+			Mail,
+			Send,
 		},
 	});
 });
