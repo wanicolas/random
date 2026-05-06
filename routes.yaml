@@ -1,0 +1,20 @@
+routes:
+  /page-article/:
+    controller: channel
+    template: listArticles
+    limit: 12
+
+  /page-contact/:
+    controller: channel
+    template: pageContact
+    filter: 'tag:contact'
+
+collections:
+  /:
+    permalink: /{slug}/
+    template: index
+    filter: 'tag:-[hash-news]'
+
+taxonomies:
+  tag: /tag/{slug}/
+  author: /author/{slug}/

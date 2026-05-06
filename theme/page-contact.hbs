@@ -1,0 +1,48 @@
+{{!< default}}
+
+        {{! ---- FORMULAIRE DE CONTACT ---- }}
+        <form  onsubmit="return false;">
+
+            {{! Prénom + Nom }}
+            <div class="flex gap-4">
+                <div class="flex-1">
+                    <label class="block text-[10px] font-medium text-primary mb-1 pl-1" for="prenom">Prénom</label>
+                    <input id="prenom" type="text" placeholder="Prénom"
+                        class="w-full bg-[#f4f4f4] rounded-full px-4 py-2.5 text-xs text-gray-800 placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-primary/30 transition-all border-none" />
+                </div>
+                <div class="flex-1">
+                    <label class="block text-[10px] font-medium text-primary mb-1 pl-1" for="nom">Nom</label>
+                    <input id="nom" type="text" placeholder="Nom"
+                        class="w-full bg-[#f4f4f4] rounded-full px-4 py-2.5 text-xs text-gray-800 placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-primary/30 transition-all border-none" />
+                </div>
+            </div>
+
+            {{! Email }}
+            <div>
+                <label class="block text-[10px] font-medium text-primary mb-1 pl-1" for="email">Email</label>
+                <div class="relative">
+                    <input id="email" type="email"
+                        class="w-full bg-[#f4f4f4] rounded-full pl-10 pr-4 py-2.5 text-xs text-gray-800 outline-none focus:ring-2 focus:ring-primary/30 transition-all border-none" />
+                    <i data-lucide="mail"
+                        class="absolute left-3.5 top-1/2 -translate-y-1/2 size-3.5 text-primary pointer-events-none"></i>
+                </div>
+            </div>
+
+            {{! Message }}
+            <div>
+                <label class="block text-[10px] font-medium text-primary mb-1 pl-1" for="message">Message</label>
+                <textarea id="message" rows="5" placeholder="Écrivez votre message..."
+                    class="w-full bg-[#f4f4f4] rounded-[1.25rem] px-4 py-3 text-xs text-gray-800 placeholder:text-gray-300 outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none border-none"></textarea>
+            </div>
+
+            {{! Bouton Envoyer }}
+            <div class="flex justify-center pt-2">
+                <button type="submit"
+                    class="bg-primary text-white font-bold text-[13px] px-6 py-2 rounded-full flex items-center gap-1.5 hover:opacity-90 transition-opacity">
+                    Envoyer
+                    <i data-lucide="send" class="size-3.5 fill-none"></i>
+                </button>
+            </div>
+
+        </form>
+</article>

@@ -9,21 +9,28 @@ services:
     environment:
       # URL locale pour que les liens marchent
       url: http://localhost:2368
-      # Important: Mode dev pour éviter le cache agressif des templates
       NODE_ENV: development
       # Configuration DB (SQLite par défaut, suffisant pour le dev)
       database__client: sqlite3
       database__connection__filename: /var/lib/ghost/content/data/ghost.db
     volumes:
-      # 1. On stocke les données (images, db) dans un volume Docker (caché)
-      # pour ne pas polluer ton dossier projet.
+      # 1. On stocke les données (images, db) dans un volume Docker (caché) pour ne pas polluer le dossier projet.
       - ghost-data:/var/lib/ghost/content
+      - ./routes.yaml:/var/lib/ghost/content/settings/routes.yaml
       
-      # 2. LA CLEF DU SUCCÈS : On injecte ton dossier theme local
-      # directement dans le dossier themes de Ghost
-      - ./theme:/var/lib/ghost/content/themes/mon-magazine
-      
-      # Note: Sur Linux, ajoute parfois 'user: "1000:1000"' si tu as des soucis de droits
+      # 2. On injecte le dossier theme local directement dans le dossier themes de Ghost
+      - ./theme:/var/lib/ghost/content/themes/random-theme
 
+  # Service Node.js pour builder le thème (Tailwind CSS + outils npm)
+  theme-builder:
+    image: node:20-alpine
+    working_dir: /theme
+    volumes:
+      - ./theme:/theme
+    command: sh -c "npm install && npm run dev"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+      
 volumes:
   ghost-data:

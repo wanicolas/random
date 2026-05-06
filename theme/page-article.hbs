@@ -1,0 +1,61 @@
+{{!< default}}
+
+{{! Page Actualités avec grille d'articles }}
+
+<div class="min-h-screen pb-24">
+    {{! Header avec titre centre et ligne decorative }}
+    <header class="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+        <div class="flex flex-col items-center text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-bold text-primary">Actualites</h1>
+            <div class="w-52 h-1 bg-primary mt-4 rounded-full"></div>
+        </div>
+
+        {{! Barre de recherche et filtres a droite }}
+        <button class="px-4 py-1.5 text-lg bg-gray-100 border-primary rounded-full border w-full text-left flex items-center gap-2" data-ghost-search>
+          <i data-lucide="search" class="size-6 text-primary"></i>
+          Rechercher...
+        </button>
+    </header>
+
+    {{! Grille d'articles - 3 colonnes }}
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {{#foreach posts}}
+            <article class="group border-b-2 border-neutral-300 py-6 first:pt-0 last:border-b-0 lg:border-b-0 lg:py-0" data-theme="{{#if primary_tag}}{{primary_tag.name}}{{/if}}">
+                <a href="{{url}}" class="block">
+                    <div class="flex items-start gap-4 lg:block lg:space-y-3">
+                        <div class="h-24 w-[8.5rem] shrink-0 overflow-hidden rounded-2xl bg-neutral-300 sm:h-28 sm:w-[9.5rem] lg:h-[11.75rem] lg:w-full lg:rounded-xl">
+                            {{#if feature_image}}
+                            <img src="{{feature_image}}" alt="{{title}}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                            {{else}}
+                            <div class="h-full w-full bg-gradient-to-br from-primary to-secondary"></div>
+                            {{/if}}
+                        </div>
+
+                        <div class="min-w-0 flex-1 lg:space-y-2">
+                            <h2 class="!font-sans text-[2.25rem] leading-[0.95] font-bold text-fake-black line-clamp-2 lg:text-4xl lg:leading-[1.04]">
+                                {{title}}
+                            </h2>
+                            <div class="mt-3 flex items-center justify-between gap-4 lg:mt-2">
+                                <time datetime="{{date format='YYYY-MM-DD'}}" class="text-xs font-light text-black/55 sm:text-sm">
+                                    {{date format="DD.MM.YYYY"}}
+                                </time>
+                            <span class="inline-flex shrink-0 items-center rounded-full bg-primary px-2 py-1 text-sm font-bold leading-none text-white sm:px-3 whitespace-nowrap">En savoir plus</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            {{/foreach}}
+        </div>
+
+        {{! Pagination }}
+        <div class="flex justify-center pb-8">
+            {{pagination}}
+        </div>
+
+        <p class="hidden text-center text-gray-500 font-semibold pb-8">
+            Aucun article ne correspond a votre recherche.
+        </p>
+    </div>
+</div>

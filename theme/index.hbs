@@ -1,37 +1,87 @@
-{{!-- Template pour la page d'accueil (liste des articles) --}}
+{{!< default}}
 
-<div class="posts-list">
-    {{#foreach posts}}
-    <article class="post-card">
-        {{#if feature_image}}
-        <div class="post-card-image">
-            <img src="{{feature_image}}" alt="{{title}}">
-        </div>
-        {{/if}}
-        
-        <div class="post-card-content">
-            <h2 class="post-card-title">
-                <a href="{{url}}">{{title}}</a>
-            </h2>
-            
-            <div class="post-card-meta">
-                <time datetime="{{date format="YYYY-MM-DD"}}">
-                    {{date format="DD MMMM YYYY"}}
-                </time>
-                {{#if primary_author}}
-                <span class="post-card-author">par {{primary_author.name}}</span>
+{{! The tag above means: insert everything in this file
+into the {body} tag of the default.hbs template }}
+
+{{! Template pour la page d'accueil (liste des articles) }}
+
+    <div>
+      <a href="#" id="random-post-btn" class="relative w-fit mx-auto block transition-transform hover:scale-105">
+        <img src="{{asset 'assets/img/accueil.svg'}}" alt="Article aléatoire"  />
+        <i data-lucide="mouse-pointer-click" class="size-12.5 stroke-1 text-secondary absolute -right-2 -bottom-4"></i>
+      </a>
+      
+      {{#get "posts"}}
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const postUrls = [
+            {{#foreach posts}}
+            "{{url}}",
+            {{/foreach}}
+          ];
+          const btn = document.getElementById('random-post-btn');
+          if (btn && postUrls.length > 0) {
+            btn.addEventListener('click', function(e) {
+              e.preventDefault();
+              const randomUrl = postUrls[Math.floor(Math.random() * postUrls.length)];
+              window.location.href = randomUrl;
+            });
+          }
+        });
+      </script>
+      {{/get}}
+      <div class="my-6 text-center">Accédez directement à un article de façon aléatoire.</div>
+      <div class="border-b w-full md:border-b-2 md:border-gray-300 mb-6 lg:mb-12"></div>
+    </div>
+  
+    <div class="flex flex-col justify-center lg:flex-row lg:px-20 lg:gap-20">
+      <div class="p-6 space-y-6">
+        <h2 class="font-bold text-2xl text-center md:text-left uppercase">Découvrez <br> nos derniers articles.</h2>
+        <div class="posts-list grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-1 lg:max-w-140">
+          {{#foreach posts}}
+            <article
+              class="post-card flex flex-col gap-8 justify-between"
+            >
+              <a href="{{url}}" class="block">
+                {{#if feature_image}}
+                  <img
+                    src="{{feature_image}}"
+                    alt="{{title}}"
+                    class="post-card-image h-46 w-full rounded-3xl object-cover"
+                  />
                 {{/if}}
-            </div>
-            
-            {{#if excerpt}}
-            <p class="post-card-excerpt">{{excerpt}}</p>
-            {{/if}}
-            
-            <a href="{{url}}" class="read-more">Lire la suite →</a>
-        </div>
-    </article>
-    {{/foreach}}
-</div>
+                <div class="post-card-content mt-2">
+                  <h2 class="post-card-title mb-1 text-2xl font-bold text-gray-900">
+                    {{title}}
+                  </h2>
+                  {{#if excerpt}}
+                    <p class="post-card-excerpt mb-4 text-gray-600">{{excerpt}}</p>
+                  {{/if}}
+                  <div
+                    class="post-card-meta justify-between flex items-center gap-4"
+                  >
+                    <time datetime="{{date format="YYYY-MM-DD"}}">
+                      {{date format="DD MMMM YYYY"}}
+                    </time>
+                    <span
+                      class="rounded-full bg-primary px-6 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+                    >
+                      En savoir plus
+                    </span>
+                  </div>
+                </div>
+              </a>
 
-{{!-- Pagination --}}
-{{pagination}}
+              <hr>
+            </article>
+          {{/foreach}}
+        </div>
+      </div>
+      
+      <div class="lg:order-first lg:w-120 shrink-0 lg:h-180 lg:pb-20 rounded-t-xl lg:rounded-xl -mb-6 bg-gray-200 p-6 flex flex-col justify-between h-120 items-end">
+        <button class="w-full rounded-full py-4 px-6 text-2xl uppercase font-bold text-white backdrop-blur-3xl">
+          Découvrez notre <br> magazine de poche
+        </button>
+        <button class="py-1 px-3 rounded-full text-xl uppercase font-bold text-white bg-primary w-fit">S'abonner</button>
+      </div>
+    </div>
