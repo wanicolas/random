@@ -1,72 +1,71 @@
 {{!< default}}
 {{#post}}
-<article class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-    {{! Container principal }}
-    <section class="mx-auto mb-10 max-w-4xl px-4 md:px-6">
 
-        {{! Bouton retour }}
-        <div class="py-6">
-            <a href="/page-article/"
-               class="inline-flex items-center gap-2 bg-primary text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full hover:scale-105 hover:shadow-lg transition-all duration-200 shadow-md">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                </svg>
-                Retour
-            </a>
+{{! Bouton retour }}
+<a href="/page-article/"
+  class="inline-flex lg:hidden items-center my-6 gap-2 bg-primary text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full hover:scale-105 hover:shadow-lg transition-all duration-200 shadow-md">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+  </svg>
+  Retour
+</a>
+
+<article>
+  {{#if feature_image}}
+  <div class="relative overflow-hidden rounded-2xl mx-auto mb-8 lg:mb-20 h-50 w-full max-w-220 lg:h-125">
+    <img
+      src="{{feature_image}}"
+      alt="{{title}}"
+      class="object-cover size-full"
+    />
+    <div class="absolute top-0 right-0 bg-white rounded-bl-xl py-0.5 px-4 text-sm text-secondary">{{ tags }}</div>
+  </div>
+  {{/if}}
+
+  <div class="flex flex-col lg:flex-row gap-16 lg:gap-32 max-w-screen-2xl mx-auto">  
+    <div>  
+    
+      {{! Ligne décorative }}
+      <hr class="border-primary border-b-2 mx-auto my-10 w-52 rounded-full lg:hidden">
+    
+      {{! Header avec titre }}
+      <h1 class="mb-10 text-3xl font-bold text-gray-900 md:text-4xl">
+        {{ title }}
+      </h1>
+    
+      {{! Contenu de l'article avec typographie améliorée }}
+      <div
+        class="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-base prose-p:mb-6 prose-a:text-primary prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-primary prose-strong:font-bold prose-ul:my-6 prose-ul:space-y-2 prose-li:text-gray-700 prose-img:rounded-2xl prose-img:shadow-lg prose-img:my-8 prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-600 prose-code:text-secondary prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded max-w-none"
+      >
+        {{content}}
+      </div>
+    
+      {{! Badges date et auteur en bas }}
+      <div class="mt-8 flex flex-wrap items-center justify-between gap-3">
+        <div
+          class="bg-secondary flex items-center gap-2 rounded-full px-4 py-1 text-sm font-medium text-white"
+        >
+          <i data-lucide="calendar" class="size-4"></i>
+          <time datetime="{{date format='YYYY-MM-DD'}}">
+            {{date format="DD.MM.YYYY"}}
+          </time>
         </div>
-
-
-        {{#if feature_image}}
-        <div class="relative overflow-hidden rounded-3xl mb-8">
-            <img
-                src="{{feature_image}}"
-                alt="{{title}}"
-                class="h-64 w-full object-cover transition-transform duration-500 sm:h-80 md:h-96"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+    
+        {{#if primary_author}}
+        <div
+          class="bg-secondary flex items-center gap-2 rounded-full px-4 py-1 text-sm font-medium text-white"
+        >
+          <i data-lucide="user" class="size-4"></i>
+          <span>{{primary_author.name}}</span>
         </div>
         {{/if}}
-
-        {{! Ligne décorative }}
-        <div class="bg-primary mx-auto my-10 h-0.75 w-52 rounded-full"></div>
-
-        {{! Header avec titre }}
-        <h1 class="mb-10 text-3xl font-bold text-gray-900 md:text-4xl">
-            {{ title }}
-        </h1>
-
-        {{! Contenu de l'article avec typographie améliorée }}
-        <div
-            class="prose prose-lg prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-base prose-p:mb-6 prose-a:text-primary prose-a:font-semibold prose-a:no-underline hover:prose-a:underline prose-strong:text-primary prose-strong:font-bold prose-ul:my-6 prose-ul:space-y-2 prose-li:text-gray-700 prose-img:rounded-2xl prose-img:shadow-lg prose-img:my-8 prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-600 prose-code:text-secondary prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded max-w-none"
-        >
-            {{content}}
-        </div>
-
-        {{! Badges date et auteur en bas }}
-        <div class="mt-8 flex flex-wrap items-center justify-between gap-3">
-            <div
-                class="bg-secondary flex items-center gap-2 rounded-full px-4 py-1 text-sm font-medium text-white"
-            >
-                <i data-lucide="calendar" class="size-4"></i>
-                <time datetime="{{date format='YYYY-MM-DD'}}">
-                    {{date format="DD.MM.YYYY"}}
-                </time>
-            </div>
-
-            {{#if primary_author}}
-            <div
-                class="bg-secondary flex items-center gap-2 rounded-full px-4 py-1 text-sm font-medium text-white"
-            >
-                <i data-lucide="user" class="size-4"></i>
-                <span>{{primary_author.name}}</span>
-            </div>
-            {{/if}}
-        </div>
+      </div>
+    </div>
+  
+    {{! Section derniers articles }}
+    <section class="rounded-t-3xl bg-gray-100 lg:w-130 shrink-0 -mx-6 -mb-6 lg:rounded-3xl">
+      {{> "latest-articles" excludeId=id}}
     </section>
-
-    {{! Section Dernières actualités avec fond }}
-    <section class="rounded-t-3xl bg-gray-100">
-        {{> "latest-articles" excludeId=id}}
-    </section>
+  </div>
 </article>
 {{/post}}

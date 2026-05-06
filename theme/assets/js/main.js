@@ -12,6 +12,7 @@ import {
 	Tag,
 	MousePointerClick,
 	ArrowRight,
+	Search,
 } from "lucide";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			Tag,
 			MousePointerClick,
 			ArrowRight,
+			Search,
 		},
 	});
 });
