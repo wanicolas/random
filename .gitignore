@@ -9,3 +9,6 @@ theme/yarn-error.log
 # Très important : Si jamais tu mappes la DB en local par erreur, on l'ignore
 *.db
 *.sqlite3
+
+.env*
+!.env.example
