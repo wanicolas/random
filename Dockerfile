@@ -1,5 +1,5 @@
 # Build the custom Ghost theme assets
-FROM node:20-alpine AS theme_builder
+FROM node:22-alpine AS theme_builder
 WORKDIR /build/theme
 
 COPY theme/package*.json ./

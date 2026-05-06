@@ -7,24 +7,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      # 1. Installer Node et les dépendances du thème, puis builder Tailwind
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          node-version: "20"
-
-      - name: Install and Build Tailwind
-        run: |
-          cd theme
-          npm install
-          npm run build
-
-      # 2. Déployer le thème
-      # - name: Deploy Ghost Theme
-      #   uses: TryGhost/action-deploy-theme@v1
-      #   with:
-      #     api-url: ${{ secrets.GHOST_ADMIN_API_URL }}
-      #     api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}
-      #     theme-path: "./theme" # Important: on déploie le dossier thème
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.PROJECT_PATH }}
+            git pull origin main
