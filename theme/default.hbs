@@ -32,8 +32,8 @@
           <a href="/page-article/" aria-label="Actualités" class="hover:scale-110 transition-transform">
             <i data-lucide="newspaper" class="size-8"></i>
           </a>
-          <a href="#" id="nav-random-post-btn" aria-label="Voir un article aléatoire" class="w-max hover:scale-110 transition-transform"><img src="./assets/img/logo-random-quadri.png" class="max-h-8 max-w-8 object-contain"></a>
-          {{#get "posts" limit="all"}}
+          <a href="#" id="nav-random-post-btn" aria-label="Voir un article aléatoire" class="w-max hover:scale-110 transition-transform"><img src="{{asset 'assets/img/logo-random-quadri.png'}}" class="max-h-8 max-w-8 object-contain"></a>
+          {{#get "posts"}}
           <script>
             document.addEventListener('DOMContentLoaded', function() {
               const navPostUrls = [

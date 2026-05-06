@@ -7,11 +7,11 @@ into the {body} tag of the default.hbs template }}
 
     <div>
       <a href="#" id="random-post-btn" class="relative w-fit mx-auto block transition-transform hover:scale-105">
-        <img src="./assets/img/accueil.svg" alt="Article aléatoire"  />
+        <img src="{{asset 'assets/img/accueil.svg'}}" alt="Article aléatoire"  />
         <i data-lucide="mouse-pointer-click" class="size-12.5 stroke-1 text-secondary absolute -right-2 -bottom-4"></i>
       </a>
       
-      {{#get "posts" limit="all"}}
+      {{#get "posts"}}
       <script>
         document.addEventListener('DOMContentLoaded', function() {
           const postUrls = [
@@ -76,9 +76,6 @@ into the {body} tag of the default.hbs template }}
             </article>
           {{/foreach}}
         </div>
-
-        {{! Pagination }}
-        {{pagination}}
       </div>
       
       <div class="lg:order-first lg:w-120 shrink-0 lg:h-180 lg:pb-20 rounded-t-xl lg:rounded-xl -mb-6 bg-gray-200 p-6 flex flex-col justify-between h-120 items-end">

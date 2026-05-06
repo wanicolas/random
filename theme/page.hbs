@@ -2,17 +2,19 @@
 
 {{!< default}}
 {{#post}}
-  <h1 class="page-title text-center text-primary font-bold text-3xl mb-1">
-    {{title}}
-  </h1>
-  <hr class="border-primary border-t-2 w-50 mx-auto">
+  {{#match @page.show_title_and_feature_image}}
+    <h1 class="page-title text-center text-primary font-bold text-3xl lg:text-5xl mb-2">
+      {{title}}
+    </h1>
+    <hr class="border-primary border-t-2 w-60 mx-auto">
 
-  {{#if feature_image}}
-    <img src="{{feature_image}}" alt="{{title}}" class="mx-auto" />
-    <hr class="border-primary border-t-2 w-50 mx-auto">
-  {{/if}}
+    {{#if feature_image}}
+      <img src="{{feature_image}}" alt="{{title}}" class="mx-auto mt-8 mb-8 rounded-4xl" />
+      <hr class="border-primary border-t-2 w-60 mx-auto">
+    {{/if}}
+  {{/match}}
 
-  <div class="page-content mt-8">
+  <div class="page-content mx-auto max-w-5xl mt-8">
     {{content}}
   </div>
 {{/post}}
