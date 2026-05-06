@@ -1,40 +1,25 @@
 {{!< default}}
 
-<section class="relative min-h-screen overflow-hidden px-4 pb-24 pt-8 sm:px-6 lg:px-8 lg:pt-14">
-    <div class="relative mx-auto w-full max-w-6xl">
-        <header class="mb-8 lg:mb-10">
-            <div class="mb-7 flex flex-col items-center gap-3">
-                <h1 class="text-5xl font-bold text-primary sm:text-6xl">Articles</h1>
-                <div class="h-1 w-52 rounded-full bg-primary"></div>
-            </div>
+{{! Page Actualités avec grille d'articles }}
 
-            <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-8">
-                <label class="relative col-span-1" aria-label="Recherche d'articles">
-                    <input
-                        id="searchInput"
-                        type="search"
-                        placeholder="Rechercher..."
-                        class="w-full rounded-full border-2 border-primary bg-transparent py-2 pl-11 pr-4 text-sm font-semibold text-fake-black placeholder:font-semibold placeholder:text-[#d0cfd2] focus:outline-none"
-                    />
-                    <i data-lucide="search" class="absolute left-3 top-1/2 size-5 -translate-y-1/2 text-primary"></i>
-                </label>
+<div class="min-h-screen pb-24">
+    {{! Header avec titre centre et ligne decorative }}
+    <header class="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+        <div class="flex flex-col items-center text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-bold text-primary">Actualites</h1>
+            <div class="w-52 h-1 bg-primary mt-4 rounded-full"></div>
+        </div>
 
-                <div class="hidden lg:flex lg:flex-1"></div>
+        {{! Barre de recherche et filtres a droite }}
+        <button class="px-4 py-1.5 text-lg bg-gray-100 border-primary rounded-full border w-full text-left flex items-center gap-2" data-ghost-search>
+          <i data-lucide="search" class="size-6 text-primary"></i>
+          Rechercher...
+        </button>
+    </header>
 
-                <label class="relative inline-flex items-center lg:ml-auto" aria-label="Filtre par thème">
-                    <i data-lucide="filter" class="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-white"></i>
-                    <select
-                        id="themeFilter"
-                        class="min-w-[7.5rem] appearance-none rounded-full bg-primary py-2 pl-9 pr-8 text-sm font-bold text-white outline-none"
-                    >
-                        <option value="">Filtres</option>
-                    </select>
-                    <i data-lucide="chevron-down" class="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-white"></i>
-                </label>
-            </div>
-        </header>
-
-        <div id="articlesGrid" class="grid grid-cols-1 gap-0 lg:grid-cols-3 lg:gap-x-9 lg:gap-y-12">
+    {{! Grille d'articles - 3 colonnes }}
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {{#foreach posts}}
             <article class="group border-b-2 border-neutral-300 py-6 first:pt-0 last:border-b-0 lg:border-b-0 lg:py-0" data-theme="{{#if primary_tag}}{{primary_tag.name}}{{/if}}">
                 <a href="{{url}}" class="block">
@@ -64,17 +49,13 @@
             {{/foreach}}
         </div>
 
-        <div
-            id="articlesPagination"
-            class="mt-8 flex justify-center pb-4 lg:mt-10"
-            data-current-page="{{pagination.page}}"
-            data-total-pages="{{pagination.pages}}"
-        >
-            <div class="hidden" id="ghostPaginationFallback">{{pagination}}</div>
+        {{! Pagination }}
+        <div class="flex justify-center pb-8">
+            {{pagination}}
         </div>
 
-        <p id="noResults" class="hidden pb-8 text-center text-base font-semibold text-black/60">
-            Aucun article ne correspond à votre recherche.
+        <p class="hidden text-center text-gray-500 font-semibold pb-8">
+            Aucun article ne correspond a votre recherche.
         </p>
     </div>
-</section>  
+</div>

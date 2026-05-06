@@ -4,6 +4,11 @@ routes:
     template: listArticles
     limit: 12
 
+  /page-contact/:
+    controller: channel
+    template: pageContact
+    filter: 'tag:contact'
+
 collections:
   /:
     permalink: /{slug}/

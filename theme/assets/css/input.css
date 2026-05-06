@@ -72,3 +72,17 @@ h6 {
 	@apply font-title;
 	letter-spacing: 0.0625em;
 }
+
+/* Variables Ghost */
+:root {
+	--gh-font-heading: var(--font-title);
+	--gh-font-body: var(--font-sans);
+}
+
+.kg-width-wide {
+	@apply mx-auto max-w-4xl;
+}
+
+.kg-width-full {
+	@apply mx-auto;
+}
