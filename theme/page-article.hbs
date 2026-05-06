@@ -21,57 +21,27 @@
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {{#foreach posts}}
-            <article class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1" data-theme="{{#if primary_tag}}{{primary_tag.name}}{{/if}}">
+            <article class="group border-b-2 border-neutral-300 py-6 first:pt-0 last:border-b-0 lg:border-b-0 lg:py-0" data-theme="{{#if primary_tag}}{{primary_tag.name}}{{/if}}">
                 <a href="{{url}}" class="block">
-                    {{! Image de l'article }}
-                    {{#if feature_image}}
-                    <div class="relative h-48 sm:h-56 overflow-hidden bg-gray-100">
-                        <img
-                            src="{{feature_image}}"
-                            alt="{{title}}"
-                            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                        />
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                    </div>
-                    {{else}}
-                    <div class="h-48 sm:h-56 bg-gradient-to-br from-color-primary to-color-secondary"></div>
-                    {{/if}}
+                    <div class="flex items-start gap-4 lg:block lg:space-y-3">
+                        <div class="h-24 w-[8.5rem] shrink-0 overflow-hidden rounded-2xl bg-neutral-300 sm:h-28 sm:w-[9.5rem] lg:h-[11.75rem] lg:w-full lg:rounded-xl">
+                            {{#if feature_image}}
+                            <img src="{{feature_image}}" alt="{{title}}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                            {{else}}
+                            <div class="h-full w-full bg-gradient-to-br from-primary to-secondary"></div>
+                            {{/if}}
+                        </div>
 
-                    {{! Contenu de la carte }}
-                    <div class="p-5 sm:p-6">
-                        {{! Tags (si disponibles) }}
-                        {{#if primary_tag}}
-                        <span class="article-theme inline-block bg-primary text-white  text-xs font-bold px-3 py-1 rounded-full mb-3">
-                            {{primary_tag.name}}
-                        </span>
-                        {{/if}}
-
-                        {{! Titre }}
-                        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">
-                            {{title}}
-                        </h2>
-
-                        {{! Excerpt }}
-                        {{#if excerpt}}
-                        <p class="text-gray-600 mb-4 line-clamp-2 text-sm sm:text-base">
-                            {{excerpt}}
-                        </p>
-                        {{/if}}
-
-                        {{! Footer avec date et bouton }}
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                            <time
-                                datetime="{{date format='YYYY-MM-DD'}}"
-                                class="text-sm text-gray-500 flex items-center gap-2"
-                            >
-                                <i data-lucide="calendar" class="size-4"></i>
-                                {{date format="DD MMM YYYY"}}
-                            </time>
-
-                            <span class="inline-flex items-center gap-2 bg-primary text-white text-sm font-semibold px-5 py-2 rounded-full hover:opacity-90 transition-opacity">
-                                En savoir plus
-                                <i data-lucide="arrow-right" class="size-4"></i>
-                            </span>
+                        <div class="min-w-0 flex-1 lg:space-y-2">
+                            <h2 class="!font-sans text-[2.25rem] leading-[0.95] font-bold text-fake-black line-clamp-2 lg:text-4xl lg:leading-[1.04]">
+                                {{title}}
+                            </h2>
+                            <div class="mt-3 flex items-center justify-between gap-4 lg:mt-2">
+                                <time datetime="{{date format='YYYY-MM-DD'}}" class="text-xs font-light text-black/55 sm:text-sm">
+                                    {{date format="DD.MM.YYYY"}}
+                                </time>
+                            <span class="inline-flex shrink-0 items-center rounded-full bg-primary px-2 py-1 text-sm font-bold leading-none text-white sm:px-3 whitespace-nowrap">En savoir plus</span>
+                            </div>
                         </div>
                     </div>
                 </a>
