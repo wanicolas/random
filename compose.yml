@@ -9,6 +9,12 @@ services:
       NODE_ENV: ${NODE_ENV}
       database__client: sqlite3
       database__connection__filename: /var/lib/ghost/content/data/ghost.db
+      mail__transport: SMTP
+      mail__options__host: ${MAIL_HOST}
+      mail__options__port: ${MAIL_PORT}
+      mail__options__auth__user: ${MAIL_USER}
+      mail__options__auth__pass: ${MAIL_PASSWORD}
+      mail__from: ${MAIL_FROM}
     volumes:
       - ghost-data:/var/lib/ghost/content
       - ./routes.yaml:/var/lib/ghost/content/settings/routes.yaml
